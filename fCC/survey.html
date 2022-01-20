@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Form</title>
+</head>
+<body>
+    <h1 id="title">Survey</h1>
+    <p id="description">This survey form is to collect data about your preffered programming language</p>
+    <form id="survey-form">
+        <label id="name-label">Full name:</label><br>
+        <input type="text" id="name" name="name" placeholder="Your full name" required><br>
+        <!--User Story #11: For the name, email, and number input fields, I can see placeholder 
+            text that gives me a description or instructions for each field.-->
+        
+        <label id="email-label">Email:</label><br>
+        <input type="email" id="email" email="email" placeholder="your.email@gmail.com" required><br>
+        <!--User Story #6: If I enter an email that is not formatted correctly,
+             I will see an HTML5 validation error.-->
+        
+        <label id="number-label">Age:</label><br>
+        <input type="number" id="number" number="number" min="7"max="99" placeholder ="Number##"><br>
+
+        <label id="dropdown-label">Choose:</label>
+        <select id="dropdown">
+            <option>1</option>
+            <option>2</option>
+          
+          
+          
+<input type="radio" id="html" name="fav_language" value="HTML">
+<label for="html">HTML</label><br>
+<input type="radio" id="css" name="fav_language" value="CSS">
+<label for="css">CSS</label><br>
+<input type="radio" id="javascript" name="fav_language" value="JavaScript">
+<label for="javascript">JavaScript</label>
+        
+      
+      
+      </select>
+        <br>
+        <label>Would you recommend lalala</label><br>
+      
+      
+      
+        <input type="checkbox" name="checkbox1" value="1"><br>
+        <input type="checkbox" name="checkbox2" value="2"><br>
+        <input type="checkbox" name="checkbox3" value="3"><br>
+        <!--User Story #11: For the name, email, and number input fields, I can see placeholder text that
+             gives me a description or instructions for each field.-->
+
+        <label>What can we Improve</label>
+        <textarea id="textarea">Write us a comment</textarea>
+     
+
+
+      
+        <button id="submit">Submit</button>
+        <!--User Story #16: Inside the form element, I am presented with a button with id="submit" to submit all my inputs.-->
+
+
+
+        
+    <!--search for       
+        
+        User Story #8: If I enter non-numbers in the number input, I will see an HTML5 validation error.
+        User Story #9: If I enter numbers outside the range of the number input, which are defined by the min
+        and max attributes, I will see an HTML5 validation error.-->  
+    
+    
+    
+    </form>
+</body>
+</html>
