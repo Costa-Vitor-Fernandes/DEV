@@ -5,20 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Survey Form</title>
+    <link rel="stylesheet" href="survey-style.css">
 </head>
 <body>
+    <main class="main">
     <h1 id="title">Survey</h1>
     <p id="description">This survey form is to collect data about your preffered programming language</p>
     <form id="survey-form">
         <label id="name-label">Full name:</label><br>
         <input type="text" id="name" name="name" placeholder="Your full name" required><br>
-        <!--User Story #11: For the name, email, and number input fields, I can see placeholder 
-            text that gives me a description or instructions for each field.-->
         
         <label id="email-label">Email:</label><br>
         <input type="email" id="email" email="email" placeholder="your.email@gmail.com" required><br>
-        <!--User Story #6: If I enter an email that is not formatted correctly,
-             I will see an HTML5 validation error.-->
+
         
         <label id="number-label">Age:</label><br>
         <input type="number" id="number" number="number" min="7"max="99" placeholder ="Number##"><br>
@@ -72,5 +71,10 @@
     
     
     </form>
+    <div class="footer">
+        <h2>Design by Vito</h2>
+    </div>
+</main>
+
 </body>
 </html>
