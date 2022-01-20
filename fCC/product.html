@@ -1,132 +1,15 @@
 
 <html lang="en">
     <head>
-    
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Product Landing Page</title>
+        <link rel="stylesheet" href="/fCC/product-style.css">
     </head>
     <!--ta faltando
     media query direito
-    flexbox direito
-    deixar bonitao
     -->
-    <style>
-    html {
-      scroll-behavior: smooth;
-    }
-    body ul li p{
-        margin: 0px;
-        padding: 0px;
-        list-style: none;
-        font-size: 1.5rem;
-        font-family: Arial, Helvetica, sans-serif
-    }
-    a{
-        text-decoration: none;
-        color: white;
-    }
-    #header{
-        margin-top: 6vh;
-        height: 5vh;
-        border-style: solid #1d1e20;
-        background: coral;
-        display:flex;
-        justify-content: space-between;
-        align-items: center;
-        border-radius: 100px;
-    }
-    #header-img{
-        padding-top: 10px;
-        display:flex;
-        width:7%;
-        height: auto;
-        margin: 10px;
-    }
-    #navbar{
-        display:flex;
-        list-style: none;
-        font-size: 9.5rem;
-        font-family: Arial, Helvetica, sans-serif;
-    }
-    
-    
-    #leftsidebar {
-      float: none;
-      width: auto;
-    }
-    
-    #menulist {
-      margin: 0;
-      padding: 0;
-    
-    }
-    #section2{
-        margin-top: 1vh;
-        background: rgb(143, 185, 100);
-    }
-
-    #section3{
-
-        margin-top: 1vh;
-        margin-left: 10vw;
-        margin-right: 10vw;
-        border-radius: 10px;
-        background: chocolate;
-        display: flex;
-        text-align: center;
-    
-        }
-    .footer{
-        margin-top: 1vh;
-        padding-top: 1px;
-        height:5vh;
-        background: pink;
-        text-align: right;
-    }
-    @media screen and (min-width: 480px) {
-      #leftsidebar {width: 200px; float: left;}
-      #main {margin-left: 216px;}
-    }
-    .nav-link:hover{
-            color: #1d1e20;
-        }
-        .nav-link{
-            margin-right: 4vw;
-            padding: 10px;
-            scroll-behavior: smooth;
-            color:white;
-            
-        }
-        #enter_email{
-            height: 60vh;
-            margin-left: 10vw;
-            margin-right: 10vw;
-            width: 80vw;
-            margin-top: 15vh;
-            text-align: center;
-            background: coral;
-            border-radius: 10px;
-            
-        }
-        #form{
-            padding-top: 10vh;
-        }
-        #rect-prices{
-            color:coral;
-            fill:coral
-        }
-        #table-div{
-            padding-top: 10vh;
-            justify-content: space-between;
-        }
-        #table-div th{
-            padding-left: 6vw;
-            padding-top: 5vh;
-        }
-
-    </style>
     <header id="header">
         <img id="header-img" src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png">
         <nav id="nav-bar">
@@ -139,38 +22,40 @@
     
         <!--logo-->
     </header>
+
+
+
     <body>
         <div id="enter_email">
-        <form id="form" action="google.com">
-            <label for="email">Enter our email list</label><br>
-            <input name="email" id="email" type="email" placeholder="your.email@gmail.com" required>
-            <input type="submit" id="submit"></button>
+             <form id="form" action="google.com">
+                <label for="email">Enter our email list</label><br>
+                <input name="email" id="email" type="email" placeholder="your.email@gmail.com" required>
+                <input type="submit" id="submit"></button>
             <!--table de um lado figurinhas e do outro texto descritivo do produto-->
-        </form>
-    </div>
+            </form>
+         </div>
     
     
-    <div id="section2">
-        <div class="videoWrapper">
-        <p align="center"><iframe id="video" width="560" height="315" src="https://www.youtube.com/embed/1ClkU9-7BNw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </p>
-        </div>
+        <div id="section2">
+            <div class="videoWrapper">
+            
+            <iframe id="video" width="560" height="315" src="https://www.youtube.com/embed/1ClkU9-7BNw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            
+            </div>
         </div>
     
 <div id="section3">
-        <svg id="rect-prices" xmlns="http://www.w3.org/2000/svg" width="321" height="321" viewBox="0 0 321 321" fill="none">
-        </svg>
     <div id="table-div">
         <table class="table">
             <tr>
-                <th>Beginer</th>
-                <th>Master</th>
-                <th>Ultra Master<br> Blaster Premium</th>
+                <th id="th-title">Beginer</th>
+                <th id="th-title">Master</th>
+                <th id="th-title">Ultra Master<br> Blaster Premium</th>
             </tr>
             <tr>
-                <th>lalala1</th>
-                <th>lalala2</th>
-                <th>lalala3</th>
+                <th>5 produtos por semana</th>
+                <th>20 produtos por semana</th>
+                <th>100 produtos por semana</th>
             </tr>
             <tr>
                 <th><button>$100</button></th>
