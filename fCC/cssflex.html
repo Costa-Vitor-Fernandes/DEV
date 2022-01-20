@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body, ul, li, p{
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+            font-size: 1.2rem;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        a{
+            text-decoration: none;
+            color: white;
+
+        }
+        h1{
+            text-align: center;
+            margin-top: 100px;
+        }
+        img{
+            max-width: 100%;
+            display:block;
+        }
+        
+        .header{
+            background: #1d1e20;
+            display:flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+
+
+        }
+        .menu{
+            display:flex;
+        }
+        .menu li{
+            margin-left: 20px;
+        }
+        .menu li a{
+            display: block;
+            padding:10px;
+        }
+        .flex{
+          margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1200px;
+        }
+        .flex > div{
+            flex: 1 1 200px;
+            margin: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="/">Logo</a>
+        <nav>
+            <ul class="menu">
+                <li><a>Sobre</a></li>
+                <li><a>Produtos</a></li>
+                <li><a>Contatos</a></li>
+            </ul>
+        </nav>  
+    </header>
+    <h1>Section Flexbox</h1>
+
+<section class="flex">
+    <div>
+    <img src="https://img.freepik.com/fotos-gratis/3d-rendem-de-uma-mesa-de-madeira-com-uma-imagem-defocussed-de-um-barco-em-um-lago_1048-3432.jpg?size=626&ext=jpg">
+    <p>legenda1</p>
+    </div>
+
+    <div>
+    <img src="https://st.depositphotos.com/1780879/3816/i/600/depositphotos_38166573-stock-photo-trees-with-sunbeams.jpg">
+    <p>legenda2</p>
+    </div>
+    
+    <div>
+    <img src="https://img.freepik.com/fotos-gratis/3d-rendem-de-uma-mesa-de-madeira-com-uma-imagem-defocussed-de-um-barco-em-um-lago_1048-3432.jpg?size=626&ext=jpg">
+    <p>legenda3</p>
+    </div>
+
+    <div>
+    <img src="https://st.depositphotos.com/1780879/3816/i/600/depositphotos_38166573-stock-photo-trees-with-sunbeams.jpg">
+    <p>legenda4</p>
+    </div>
+
+    <div>
+    <img src="https://img.freepik.com/fotos-gratis/3d-rendem-de-uma-mesa-de-madeira-com-uma-imagem-defocussed-de-um-barco-em-um-lago_1048-3432.jpg?size=626&ext=jpg">
+    <p>legenda5</p>
+    </div>
+</section>
+</body>
+</html>
