@@ -36,7 +36,7 @@ body, a, li{
     background-color: darkblue;
     display: flex;
     flex-direction: column;
-    
+    margin-left: 180px;
 }
 .main-section header{
     font-family: Arial, Helvetica, sans-serif;
