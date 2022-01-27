@@ -60,9 +60,29 @@ html {
 }
   
 #form{
-    padding-top: 10vh;
+  margin: 0 auto;
+    font-family: Roboto, sans-serif;
+    font-size: 2rem;
+    display: flex;
+    flex-direction: column;
+    padding: 9vh 10vw;;
 }
- 
+#email{
+  height: 10vh;
+  font-size: 0.75em;
+}
+#submit{
+  margin-top: 30px;
+  padding: 20px 0px;
+  font-size: 0.75em;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border: none;
+  border-radius: 10px;
+
+}
+#submit:hover{
+  background: rgb(255, 157, 112);
+}
 
   #section2{
       display: flex;
