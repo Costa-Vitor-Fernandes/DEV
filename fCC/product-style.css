@@ -1,3 +1,6 @@
+/* falta dar uma arrumada no youtube
+media query direito
+estilizar melhor */
 html {
     scroll-behavior: smooth;
   }
@@ -103,30 +106,46 @@ html {
   
       }
       #table-div{
-          margin-top: 4vh;
-          margin-bottom: 4vh;
-          border-radius: 20px;
-          height: 40vh;
+        margin: 2vh 1vw;
         background: #FDA7A3;
-        padding-left: 5vw;
-        justify-content: center;
-        padding-right: 15vw;
-        padding-top: 30vh;
+        padding: 4vh 2vw;
+
       }
       #table-div th{
-          padding-left: 10vw;
+          padding: 10vh 5vw;
+          font-family: Verdana, Geneva, Tahoma, sans-serif;
       }
+      .table{
+        border-spacing: 10 0px;
+        /* border-collapse: collapse; */
+      }
+      .table button{
+        font-size: 0.75em;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border: none;
+  height: 5vh;
+  width: 10vw;
+  border-radius: 5px;
+
+
+}
+.table button:hover{
+  background: #d69390;
+}
+      
 #th-title{
     font-family: Arial, Helvetica, serif;
     font-size: 4vh;
 }
- 
+.table tr{
+  background: #ffc3c0;;
+  padding: 2vh 1vw;
+}
 
 
   .footer{
       margin-top: 1vh;
       padding-top: 1px;
-      height:6vh;
       background: #F05C68;
       text-align: right;
   }
