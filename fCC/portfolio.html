@@ -5,118 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vito Portfólio</title>
+    <link rel="stylesheet" href="portfolio-style.css">
 </head>
-<body>
-    <style>
-        body, ul, li, p{
-            margin:0px;
-            padding:0px;
-            list-style: none;
-            font-size: 15px;
-            font-family: Arial, Helvetica, sans-serif;
-            text-decoration: none;
-        }
-        .header{
-            top: 0px;
-            left: 0px;;
-            height: 5vh ;
-            width: 100vw;
-            overflow: hidden;
-            position: fixed;
-            padding: 20px;
-            display: flex;
-            background: #1d1e20;;
-            justify-content: space-between;
-            align-items: center;
-
-        }
-
-        .menu{
-            display: flex;
-            margin-left: 10px;
-            margin-right: 20px;
-
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-        a{
-            color: white;
-            margin-left: 30px;
-        }
-        #welcome-section{
-            height: 80vh;
-            text-align: center;
-            align-content: center;
-            background: rgb(144, 144, 144);
-        }
-        #welcome-section > h1{
-            padding-top: 40vh;
-        }
-        #projects{
-            display: flex;
-            margin:0 auto;
-            height: 80vh;
-            width: 100%;
-            align-content: center;
-            background: blue ;
-            padding-top: 8vh;
-            padding-bottom: 2vh;
-        
-        }
-        #projects p{
-           margin-left: 1vw;
-        }
-        .project-tile{
-            width: 100%;
-            margin-left: 1vw;
-            height: 10vh;
-            
-        }
-        img{
-        height: 30vh;
-    }
-        #navbar{
-         align-content: center;
-        
-        }
-
-           
-    @media screen and (min-width: 480px) {
-      #navbar {width: 330px; float: left;}
-      #main {margin-left: 216px;}
-    }
-    .about{
-        margin-left: 2vw;
-        text-align: center;
-        margin-bottom: 2vw;
-    }
-    .about svg{
-        margin-right: 30px;    
-    }
-    .footer{
-        height: 5vw;
-        background: chocolate;
-        text-align : right;
-    }
-    img{
-        height: 30vw;
-        display: flex;
-        margin: 1vh 1vh;
-    }
-    .flexcolumn{
-        display: flex;
-        flex-direction: column;
-    }
-    h2{
-        padding-top: 30px;
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 10px;
-    }
-    </style>
-    
+<body>  
     
     <header class="header">
-        <a>Logo</a>
+        <a id="logo">Logo</a>
         <nav id="navbar">
             <ul class="menu">
 
@@ -162,7 +56,7 @@
     </section>
     <section class="footer">
 
-        <h2>Entirely coded by Vitor</h2>
+        <h4>Entirely coded by Vitor</h4>
     </section>
 </body>
 </html>

@@ -48,3 +48,18 @@ for(let i = 0; i<contacts.length; i++){
 }
 
 lookUpProfile("Akira", "likes");
+
+
+
+
+function numeroDriven (num){
+let numer =0
+  for(let n=0;n<num;n++){
+   numer=Math.pow(n,5)-2
+  if (numer == num) return true
+}
+return false
+}
+numeroDriven(3) //return true
+numeroDriven(23) //return true
+numeroDriven(10) //return false
