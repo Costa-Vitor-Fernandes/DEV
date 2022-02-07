@@ -6,10 +6,8 @@ body, h1, p, div{
     display: flex;
     flex-direction: column;
     text-align: center;
-    height: 100%;
-    padding-top: 10vh;
+    padding-top: 0vh;
     background: cornflowerblue;
-    margin-top: 10px;
     border-radius: 50px 50px 0px 0px;
     justify-content: center;
 }
@@ -17,11 +15,11 @@ body, h1, p, div{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0px 25vw;
-    padding: 3vw  0px;
+    margin: 0px 10vw;
+    padding: 10vh  0px;
     border: 20px cyan solid;
     background: cyan;
-    margin-top: 50vh;
+    margin-top: 10vh;
     border-radius: 50px;
     justify-content: center;
 
@@ -29,7 +27,7 @@ body, h1, p, div{
 .footer{
     display: flex;
     justify-content: flex-end;
-    margin-top: 30vh;
+    margin-top: 40vh;
     margin-bottom: 0px;;
     padding-bottom: 0px;
     height: 20vh;
@@ -47,11 +45,10 @@ body, h1, p, div{
     resize: none;
 
 }
-@media screen and (max-width: 400px) {
+@media screen and (min-width: 400px) {
     .main{
         margin: 0px;
         padding: 0px;
-        transform: scale(0.8);
         justify-content: center;
         align-items: center;
         height: 180vh;
@@ -59,18 +56,28 @@ body, h1, p, div{
     }
 
     .center-container{
-        transform: scale(0.8);
-        margin-top: 0;
-        margin-left: 1vw;
-        margin-right: 0;
-        height: 100vh;
+        margin: 0px 10vw;
+        padding: 10vh  0px;
+        border: 20px cyan solid;
         background: cyan;
-        padding-top: 3vh;
-        padding-bottom: 30vh;
-        align-content: center;
+        margin-top: 10vh;
+        border-radius: 50px;
         justify-content: center;
-        width: 100%;
 
     }
+    .footer{
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 0px;;
+            padding-bottom: 0px;
+            height: 20vh;
+            width: 100%;
+            background-color: chartreuse;
+            border-radius: 50px 50px 0px 0px;
+        }
+        .footer h2{
+            padding-top: 1.5rem;
+            padding-right: 30px;
+        }
 
-}
+    }
