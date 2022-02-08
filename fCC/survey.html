@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Survey Form</title>
     <link rel="stylesheet" href="survey-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto&family=Roboto+Mono:wght@200&display=swap" rel="stylesheet">
 </head>
 <body>
     <main class="main">
@@ -23,31 +24,32 @@
         <label id="number-label">Age:</label><br>
         <input type="number" id="number" number="number" min="7"max="99" placeholder ="Number##"><br>
 
-        <label id="dropdown-label">Choose:</label>
+        <label id="dropdown-label">Choose:</label><br>
         <select id="dropdown">
-            <option>1</option>
-            <option>2</option>
-          
-          
-          
-<input type="radio" id="html" name="fav_language" value="HTML">
-<label for="html">HTML</label><br>
-<input type="radio" id="css" name="fav_language" value="CSS">
-<label for="css">CSS</label><br>
-<input type="radio" id="javascript" name="fav_language" value="JavaScript">
-<label for="javascript">JavaScript</label>
-        
-      
-      
+            <option>Currently working</option>
+            <option>Unemployed</option>         
       </select>
+          <br>
+            
+    <label id="radio-buttons-label">Choose your fav</label><br>
+    <input type="radio" id="html" name="fav_language" value="HTML">
+    <label for="html">HTML</label><br>
+    <input type="radio" id="css" name="fav_language" value="CSS">
+    <label for="css">CSS</label><br>
+    <input type="radio" id="javascript" name="fav_language" value="JavaScript">
+    <label for="javascript">JavaScript</label>
+    
+ 
+      
+ 
         <br>
-        <label>Would you recommend lalala</label><br>
+        <label>Do you</label><br>
       
       
       
-        <input type="checkbox" name="checkbox1" value="1"><br>
-        <input type="checkbox" name="checkbox2" value="2"><br>
-        <input type="checkbox" name="checkbox3" value="3"><br>
+        <input type="checkbox" name="checkbox1" value="1"> use frameworks(react, vue etc..)<br>
+        <input type="checkbox" name="checkbox2" value="2"> use git, github<br>
+        <input type="checkbox" name="checkbox3" value="3"> use node, yarn, docker<br>
         <!--User Story #11: For the name, email, and number input fields, I can see placeholder text that
              gives me a description or instructions for each field.-->
 
@@ -56,11 +58,11 @@
      
 
 
-      
-        <button id="submit">Submit</button>
-        <!--User Story #16: Inside the form element, I am presented with a button with id="submit" to submit all my inputs.-->
+      <div class="button">
+          <button id="submit">Submit</button>
 
-
+      </div>
+     
 
         
     <!--search for       
