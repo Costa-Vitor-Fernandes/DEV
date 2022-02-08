@@ -54,11 +54,11 @@ a{
     height: 120vh;
     width: 100%;
     background: rgb(190 190 190) ;
-    padding: 100px 0;
+    padding: 35vh 0;
 
 }
 .project-tile{
-    margin: 10px auto;
+    margin: 6vh auto;
 }
 #projects a{
     background-color: #1d1e20;
