@@ -1,3 +1,11 @@
+//npm init -y
+//npm i sequelize mysql2
+// pode ser tbm mariadb, postgres, sqlite 
+//ordem dos arquivos ->
+//db.js pra inicializar com sequelize
+//produto/tablea(n).js pra definir as caracteristicas das tabelas 
+//index.js pra de fato manipular as coisas
+
 // # Set architecture flags
 // export ARCHFLAGS="-arch x86_64"
 // # Ensure user-installed binaries take precedence
@@ -25,7 +33,7 @@
 // test -f ~/.bashrc && source ~/.bashrc
 
 const Sequelize = require('sequelize')
-const sequelize = new Sequelize("sys", 'root', "calacref11!", {
+const sequelize = new Sequelize("crud", 'root', "calacref11!", {
     dialect : 'mysql',
     host : 'localhost',
     port : 3306
