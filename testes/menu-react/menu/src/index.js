@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Menu from './Menu';
 import {BrowserRouter, Routes, Route} from "react-router-dom"
-import Expenses from "./expenses";
-import Invoices from "./invoices";
 import Vagas from './vagas'
+import Login from './routes/cadastro';
+import Cadastro from './routes/cadastro';
 
 ReactDOM.render(
   
@@ -18,13 +18,19 @@ ReactDOM.render(
     <Vagas />
       </div>
      } />
-      <Route path="expenses" element={
+      <Route path="cadastro" element={
         <div>
         <Menu></Menu>  
-        <Expenses />
+        <Cadastro />
         </div>
       } />
-      <Route path="invoices" element={<Invoices />} />
+      <Route path="login" element={
+        <div>
+        <Menu></Menu>  
+        <Login />
+        </div>
+      
+      } />
     </Route>
     <Route
       path="*"
