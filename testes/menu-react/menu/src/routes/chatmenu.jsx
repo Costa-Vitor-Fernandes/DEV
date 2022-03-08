@@ -1,4 +1,5 @@
 export default function Chatmenu(){
+    document.title ="JF Freelancer Chat"
     return(
         <div>
             <h1>Chatmenu</h1>

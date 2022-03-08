@@ -7,6 +7,7 @@ import { ReactComponent as CogIcon } from './icons/cog.svg';
 import { ReactComponent as ChevronIcon } from './icons/chevron.svg';
 import { ReactComponent as ArrowIcon } from './icons/arrow.svg';
 import { ReactComponent as BoltIcon } from './icons/bolt.svg';
+import {ReactComponent as ProfileIcon} from './icons/user.svg'
 import React, { useState, useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
@@ -19,7 +20,7 @@ function Menu() {
       <NavItem icon={<BellIcon />}>
         <DropNotifications />
         </NavItem>
-      <NavItem id="bell" icon={<MessengerIcon />} />
+      <NavItem id="chat" icon={<MessengerIcon />} />
       <NavItem icon={<CaretIcon />}>
         <DropdownMenu></DropdownMenu>
       </NavItem>
@@ -40,8 +41,8 @@ function NavItem(props) {
   const [open, setOpen] = useState(false);
   let href = '#'
   // getting things to work by id
-  if(props.id === "bell"){
-    href = './expenses'
+  if(props.id === "chat"){
+    href = './chatmenu'
   }
 
 
@@ -89,19 +90,21 @@ function DropdownMenu() {
         unmountOnExit
         onEnter={calcHeight}>
         <div className="menu">
-          <DropdownItem>My Profile</DropdownItem>
-          <DropdownItem
-            leftIcon={<CogIcon />}
-
-            goToMenu="settings">
-            Settings
-          </DropdownItem>
+          <DropdownItem icon={<ProfileIcon />}><a href="/perfil-freela">My Profile</a></DropdownItem>
+          <DropdownItem><a href='/meus-freelas'>Meus Freelas</a></DropdownItem>
           <DropdownItem
             leftIcon="🦧"
 
             goToMenu="animals">
             Animals
           </DropdownItem>
+          <DropdownItem
+            leftIcon={<CogIcon />}
+
+            goToMenu="settings">
+            Settings
+          </DropdownItem>
+
 
         </div>
       </CSSTransition>
@@ -149,7 +152,7 @@ function DropNotifications () {
 
   function DropdownNotItems(props) {
     return (
-      <a href="#" className="menu-item" onClick={() => setOpen(!open)}>
+      <a href="/meus-freelas" className="menu-item" onClick={() => setOpen(!open)}>
         <span></span>
         {props.children}
       </a>
@@ -158,7 +161,8 @@ function DropNotifications () {
 
   return (
     <div className='notifications'>
-    <DropdownNotItems>My Profile</DropdownNotItems>
+    <DropdownNotItems>Puxar notificações do banco de dados aqui</DropdownNotItems>
+    <DropdownNotItems><a>Parabens voce foi contratado</a></DropdownNotItems>
     </div>
   )
 

@@ -1,8 +1,6 @@
 export default function Cadastro () {
     return (
-        <div style={'display : flex'}>
-
-<div class="container">
+<div class="main-section">
             <form action="#">
                 <h1>Cadastro</h1>
                 <div class="Nome">
@@ -100,6 +98,6 @@ export default function Cadastro () {
                 <button href="home.html">Submit</button>
             </form>
         </div>
-        </div>
+        
     )
 }
