@@ -111,6 +111,7 @@ a {
   padding: 1rem;
   overflow: hidden;
   transition:  var(--speed) ease;
+  z-index: 2;
 }
 .notifications{
   position: absolute;
@@ -122,6 +123,7 @@ a {
   border: var(--border);  
   border-radius: var(--border-radius);
   padding: 1rem;
+  z-index: 2;
 }
 .menu {
   width: 100%;
@@ -188,10 +190,65 @@ a {
 
 /* Main-Section */
 .main-section{
-  margin: 0 10px;
+  margin: 10px 10px;
   height: 78vh;
   background: rgb(230, 230, 230);
+
   text-align: center;
+
 }
 
-
+.profile-img{
+  
+  margin : 0 auto;
+  align-content: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50px;
+  background-color: rgb(161, 161, 161);
+}
+.profile-info{
+  margin: 10px 0px;
+}
+.profile-info input{
+  width: 90%;
+  margin-top: 5px;
+}
+.right-side-button{
+  justify-content: flex-end;
+}
+.chat-menu-bar{
+  display: flex;
+  flex-direction: row;
+  height: 60px;
+  background-color: rgb(138, 138, 138);
+  width: 100%;
+  border: 5px solid rgb(138, 138, 138);
+  transform: translateX(-5px);
+  margin-bottom: 8px;
+}
+.chat-menu-bar p{
+  color: black;
+}
+.last-saw{
+  font-size: 0.5em;
+  margin-left: 20px;
+  margin-top: 40px;
+  justify-content: flex-end;
+}
+.mini-comp-img{
+  border-radius: 50px;
+  background-color: rgb(255, 255, 255);
+  justify-content: left;
+  height: 60px;
+  width: 60px;
+}
+.mini-comp-text{
+  background-color: black;
+  margin : 0;
+  height: 10px;
+}
+.chat-header{
+ border : 5px solid #6b6b6b;
+ background-color: #6b6b6b;
+}

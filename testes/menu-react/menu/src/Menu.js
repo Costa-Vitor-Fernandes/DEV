@@ -90,7 +90,7 @@ function DropdownMenu() {
         unmountOnExit
         onEnter={calcHeight}>
         <div className="menu">
-          <DropdownItem icon={<ProfileIcon />}><a href="/perfil-freela">My Profile</a></DropdownItem>
+          <DropdownItem icon={<ProfileIcon />}><a href="/perfil">My Profile</a></DropdownItem>
           <DropdownItem><a href='/meus-freelas'>Meus Freelas</a></DropdownItem>
           <DropdownItem
             leftIcon="🦧"

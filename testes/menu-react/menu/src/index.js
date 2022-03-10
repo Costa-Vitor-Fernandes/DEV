@@ -8,9 +8,10 @@ import Cadastro from './routes/cadastro.jsx';
 import Login from './routes/login'
 import Chatmenu from './routes/chatmenu';
 import MeusFreelas from './routes/freela/meus-freelas';
-import Perfilfreela from './routes/freela/perfil-freela';
-import PerfilContratante from './routes/contratante/perfil-contratante';
 import Avaliacao from './routes/avaliacao';
+import Perfil from './routes/perfil';
+import Chat from './routes/chat';
+
 
 document.title = "JF Freelancer"
 
@@ -50,22 +51,22 @@ ReactDOM.render(
         <MeusFreelas />
         </div>
       } />
-      <Route path="perfil-freela" element={
+      <Route path="perfil" element={
         <div>
         <Menu></Menu>  
-        <Perfilfreela />
-        </div>
-      } />
-      <Route path="perfil-contratante" element={
-        <div>
-        <Menu></Menu>  
-        <PerfilContratante></PerfilContratante>
+        <Perfil />
         </div>
       } />
       <Route path="avaliacao" element={
         <div>
         <Menu></Menu>  
         <Avaliacao />
+        </div>
+      } />
+      <Route path="chat" element={
+        <div>
+        <Menu></Menu>  
+        <Chat />
         </div>
       } />
     <Route

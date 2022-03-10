@@ -1,9 +1,13 @@
+import ChatMenuBar from "../mini-components/ChatMenuBar";
+
 export default function Chatmenu(){
     document.title ="JF Freelancer Chat"
     return(
-        <div>
-            <h1>Chatmenu</h1>
-            <h1>escolhe um contratante/freela aqui</h1>
+        <div className="main-section">
+            <h4>Chat-menu</h4>
+            <ChatMenuBar />
+            <ChatMenuBar />
         </div>
+
     )
 }
