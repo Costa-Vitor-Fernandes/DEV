@@ -176,7 +176,7 @@ a {
 
 
 .menu-secondary-enter {
-  transform: translateX(510%);
+  transform: translateX(110%);
 }
 .menu-secondary-enter-active {
   transform: translateX(0%);
@@ -184,17 +184,26 @@ a {
 }
 
 .menu-secondary-exit-active {
-  transform: translateX(510%);
+  transform: translateX(110%);
   transition: all var(--speed) ease;
+}
+/* Design div */
+.design-div{
+  background-color:#f1f1f1;
+  overflow-y:scroll;
+}
+.design-div::-webkit-scrollbar{
+  display:none;
 }
 
 /* Main-Section */
 .main-section{
-  margin: 10px 10px;
+  margin: 10px 5%;
   height: 78vh;
-  background: rgb(230, 230, 230);
-
+  background: rgb(224, 224, 224);
+  border: 5px solid #f1f1f1;
   text-align: center;
+
 
 }
 
@@ -217,17 +226,33 @@ a {
 .right-side-button{
   justify-content: flex-end;
 }
-.chat-menu-bar{
+/* Link Bar Component */
+.link-bar{
+  animation-name: grow;
+  animation-duration: 1s;
+  transition : 1s ease-out;
   display: flex;
   flex-direction: row;
   height: 60px;
   background-color: rgb(138, 138, 138);
   width: 100%;
-  border: 5px solid rgb(138, 138, 138);
-  transform: translateX(-5px);
   margin-bottom: 8px;
+  border: 5px solid rgb(138, 138, 138);
+ -webkit-transition: 1s ease-out;
+ -moz-transition: 1s ease-out;
+ transform: translate(-5px, 0px);
 }
-.chat-menu-bar p{
+@keyframes grow {
+  0%{
+    transform: translate(5px,0) scale(0.7);
+    opacity: 0%;
+  }
+  100%{
+    transform: translate(-5px, 0px) scale(1);
+    opacity: 100%;
+  }
+}
+.link-bar p{
   color: black;
 }
 .last-saw{
@@ -236,14 +261,14 @@ a {
   margin-top: 40px;
   justify-content: flex-end;
 }
-.mini-comp-img{
+.link-bar-img{
   border-radius: 50px;
   background-color: rgb(255, 255, 255);
   justify-content: left;
   height: 60px;
   width: 60px;
 }
-.mini-comp-text{
+.link-bar-text{
   background-color: black;
   margin : 0;
   height: 10px;

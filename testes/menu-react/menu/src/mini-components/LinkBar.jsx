@@ -1,13 +1,12 @@
-export default function ChatMenuBar (){
+export default function LinkBar (){
     return (
         <a href="/chat">
-        <div className="chat-menu-bar">
+        <div className="link-bar">
 
-            <div className="mini-comp-img">img</div>
+            <div className="link-bar-img">img</div>
 
             <section>
                 <p>Nome da emp </p>
-   
             </section>
                 <p className="last-saw">ultima mensagem as 20:20h</p>
         </div>

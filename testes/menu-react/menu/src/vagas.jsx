@@ -1,9 +1,20 @@
+import LinkBar from "./mini-components/LinkBar";
+
 export default function Vagas() {
     return (
+      <div className="design-div">
+
       <main className="main-section" >
         <h1>Vagas</h1>
-        
+        <LinkBar />
+        <LinkBar />
+        <LinkBar />
+        <LinkBar />
+        <LinkBar />
+        <LinkBar />
+        <LinkBar />
       </main>
+      </div>
     );
   }
   
