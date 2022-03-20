@@ -1,19 +1,59 @@
+import React, {useState} from "react"
+
 export default function Login () {
     document.title = "Login"
+    const [values,setValues] = useState();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleUsername = (user) =>{
+        setUsername(()=>({
+          
+          user: user.target.value,
+        }))
+        
+}
+    const handlePassword = (pass) =>{
+        setPassword(()=>({
+            password: pass.target.value
+        }))
+       
+    }
+
+const submitClick = () => {
+    console.log("checar no banco")
+    console.log(username,password) // criptografado
+    setPassword(()=>({
+        password: ''
+    }))
+    setUsername(()=>({
+        user: ''
+    }))
+}
+
+
+
     return  (
-    <div class="main-section">
+    <div className="main-section">
            <h1>Login</h1>
+           
+
            <div><input type="radio" />Contratante<input type="radio" />Frela</div>
            
             <div>
-                <h4>Username<input type="text" /></h4>
+                <h4>Username<input type="text" onChange={handleUsername}/></h4>
             </div>
 
-           <div class="password">
-               <h4>Password<input type="text" /></h4>
+           <div className="password">
+               <h4>Password
+               <input type="password" onChange={handlePassword} />
+                   </h4>
            </div>
 
-           <button>Submit</button>
+           <input type="submit" href="#" onClick={submitClick}  />
+
+     
+          
         <>
         <div>
             <p>lembrar-me</p>
@@ -22,7 +62,7 @@ export default function Login () {
         </>
            <a href="/cadastro">Cadastrar</a>
            <div>
-           <a>Recuperar minha senha</a>
+           
            </div>
     </div>
 
