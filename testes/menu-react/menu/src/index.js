@@ -11,6 +11,8 @@ import MeusFreelas from './routes/freela/meus-freelas';
 import Avaliacao from './routes/avaliacao';
 import Perfil from './routes/perfil';
 import Chat from './routes/chat';
+import LandingPage from "./routes/landing-page"
+import LogMenu from "./LogMenu"
 
 
 document.title = "JF Freelancer"
@@ -21,6 +23,12 @@ ReactDOM.render(
   <Routes>
     <Route>
     <Route path="/" element={
+    <div>
+      <LogMenu />
+    <LandingPage />
+      </div>
+     } />
+    <Route path="/index" element={
     <div>
       <Menu />
     <Vagas />
