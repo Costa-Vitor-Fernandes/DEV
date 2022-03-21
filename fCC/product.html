@@ -6,12 +6,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Product Landing Page</title>
         <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono:wght@200&display=swap" rel="stylesheet">
+
+
         <link rel="stylesheet" href="/DEV/fCC/product-style.css">
 
+
     </head>
-    <!--ta faltando
-    media query direito
-    -->
     <header id="header">
         <img id="header-img" src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png">
         <nav id="nav-bar">
@@ -29,10 +29,11 @@
 
     <body>
         <div id="enter_email">
-             <form id="form" action="google.com">
+            <!-- action="something.com" -->
+            <form id="form" action="#" >
                 <label for="email">Enter our email list</label><br>
-                <input name="email" id="email" type="email" placeholder="your.email@gmail.com" required>
-                <input type="submit" id="submit"></button>
+                <input name="email" id="email" type="email" value="your.email@gmail.com" required>
+                <input type="submit" id="submit" onclick="submitEmail()"></button>
             <!--table de um lado figurinhas e do outro texto descritivo do produto-->
             </form>
          </div>
