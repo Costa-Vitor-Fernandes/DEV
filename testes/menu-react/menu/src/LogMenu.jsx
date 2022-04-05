@@ -2,7 +2,7 @@ import { ReactComponent as Profile } from './icons/user.svg'
 import {ReactComponent as Plus} from './icons/plus.svg'
 import {ReactComponent as Cog } from './icons/cog.svg'
 import React, { useState, useEffect, useRef } from 'react';
-import { CSSTransition } from 'react-transition-group';
+
 
 function LogMenu() {
   return (

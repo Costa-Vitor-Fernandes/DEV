@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './calculadora/calcstyle.css'
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import Menu from './Menu';
 import Vagas from './vagas'
@@ -13,6 +14,8 @@ import Perfil from './routes/perfil';
 import Chat from './routes/chat';
 import LandingPage from "./routes/landing-page"
 import LogMenu from "./LogMenu"
+import Calc from './calculadora/calc';
+
 
 
 document.title = "JF Freelancer"
@@ -75,6 +78,11 @@ ReactDOM.render(
         <div>
         <Menu></Menu>  
         <Chat />
+        </div>
+      } />
+      <Route path="calc" element={
+        <div>
+        <Calc />
         </div>
       } />
     <Route
