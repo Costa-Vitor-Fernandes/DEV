@@ -8,6 +8,7 @@ body, ul, li, p, img, a{
 }
 
 .header{
+    z-index: 1;
     top: 0px;
     left: 0px;;
     height: 7vh ;
@@ -17,7 +18,7 @@ body, ul, li, p, img, a{
     padding-top: 20px;
     padding-bottom:20px;
     display: flex;
-    background: #1d1e20;;
+    background: #213660;;
     justify-content: space-around;
     align-items: center;
 
@@ -71,6 +72,13 @@ a{
 img{
     height:200px;
     width:200px;
+    filter:grayscale(1);
+    transition: filter .33s ease-in-out;
+    
+
+}
+img:hover{
+    filter:grayscale(0)
 }
 .about{
     text-align: center;
