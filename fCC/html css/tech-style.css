@@ -10,15 +10,25 @@ body, a, li{
 .main-doc{
     display: flex;
 }
+
+#HTML-doc{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+    padding-bottom:30px;
+}
+
 #navbar{
     overflow: hidden;
     position: fixed;
     padding: 10px;
-    background: lightcoral;
+    background: coral;
+    border-top:1px solid black;
+    border-right: 2px solid black;
     float: left;
     display: flex;
     flex-direction: column;
     height: 100vh;
+    width:18vw;
 }
 .nav{
     margin: 0px;
@@ -33,16 +43,18 @@ body, a, li{
     
     }
 .main-section{
-    background-color: darkblue;
+    margin-left: 19vw;
+    border: 1px solid black;
     display: flex;
     flex-direction: column;
-    margin-left: 180px;
+    
 }
 .main-section header{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.5rem;
     margin-left: 1vw;
     margin-top: 2vh;
+    text-align: center;
 
 }
 .main-section p {
@@ -53,9 +65,9 @@ body, a, li{
 }
 #intro{
     background: coral;
-    border-radius: 30px 70px 0px 0px;
+    
 }
 #section_5{
-    background: coral;
-    border-radius: 0px 0px 70px 30px;
+    
+    
 };
