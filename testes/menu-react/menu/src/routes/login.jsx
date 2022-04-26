@@ -1,23 +1,18 @@
 import React, {useState} from "react"
-
+import axios from 'axios'
 export default function Login () {
+    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     document.title = "Login"
     const [values,setValues] = useState();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const handleUsername = (user) =>{
-        setUsername(()=>({
-          
-          user: user.target.value,
-        }))
+        setUsername(user.target.value)
         
 }
     const handlePassword = (pass) =>{
-        setPassword(()=>({
-            password: pass.target.value
-        }))
-       
+        setPassword(pass.target.value)      
     }
 
 const submitClick = () => {
@@ -29,6 +24,17 @@ const submitClick = () => {
     setUsername(()=>({
         user: ''
     }))
+
+
+    axios({
+        method: "post",
+        url: "http://localhost:3001/post",
+        data: {
+          username: `${username}`,
+          password: `${password}`
+
+        },
+      });
 }
 
 

@@ -1,0 +1,22 @@
+POST http://localhost:3001/create
+Content-Type: application/json
+
+{
+    "username": "vito",
+    "password": "adi"
+}
+
+###
+
+POST http://localhost:3001/login
+Content-Type: application/json
+
+{
+    "username": "vito",
+    "password": "adi"
+}
+
+
+###
+
+GET http://localhost:3001/
