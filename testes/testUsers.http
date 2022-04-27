@@ -1,0 +1,70 @@
+GET http://localhost:3001/
+Content-Type: application/json
+
+### gets all users
+
+POST http://localhost:3001/tester
+Content-Type: application/json
+
+{
+    "username": "vito"
+}
+
+###
+
+
+POST http://localhost:3001/create
+Content-Type: application/json
+
+{
+    "username": "vito",
+    "email": "vito@gmail.com",
+    "password": "admin"
+}
+
+###
+POST http://localhost:3001/create
+Content-Type: application/json
+
+{
+    "username": "marcia",
+    "email": "marcia@gmail.com",
+    "password": "123"
+}
+
+
+###
+POST  http://localhost:3001/login
+Content-Type: application/json
+
+{
+    "username": "marcia",
+    "password": "123"
+}
+
+###
+POST http://localhost:3001/login
+Content-Type: application/json
+
+{
+    "username": "vito",
+    "password": "admin"
+}
+
+###
+POST http://localhost:3001/login
+Content-Type: application/json
+
+{
+    "username": "abc",
+    "password": "admin"
+}
+
+###
+POST http://localhost:3001/login
+Content-Type: application/json
+
+{
+    "username": "marcia",
+    "password": "123"
+}
