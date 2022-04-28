@@ -4,9 +4,7 @@ const app = express();
 const mysql = require("mysql")
 const cors = require('cors')
 const bcrypt = require('bcrypt');
-
 const jwt = require('jsonwebtoken');
-// console.log(process.env.SECRET)
 
 app.use(cors());
 app.use(express.json());
@@ -19,23 +17,33 @@ const db = mysql.createPool({
     port: "3306"
     //aqui a porta que ta o meu server mysql
 })
+        
+function verifyJWT(req, res, next){ 
+    var token = req.body.token
 
-app.post('/tester', async (req,res)=>{
-    const username = req.body.username
-    db.query('SELECT * FROM new_schema.users' , async function (err, result, fields) {
-        //  if (err) throw new Error(err)
-    const allUsers = result.map((r)=> r.username)
-        if(await allUsers.includes(username)) return res.send("ja tem esse usuário")
-    })
+    if (!token) 
+        return res.status(401).send({ auth: false, message: 'Token não informado.' }); 
+    
+    jwt.verify(token, process.env.SECRET, function(err, decoded) { 
+        if (err) 
+            return res.status(500).send({ auth: false, message: 'Token inválido.' }); 
+        next(); 
+    }); 
+}    
+        
 
-})
 
+
+//==============================================================================================================================
+// POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST 
+
+//registering
 app.post('/create', async (req,res)=>{
     
     const password =  req.body.password
     const username = req.body.username
     const email = req.body.email    
-    console.log("trying to create user in database")
+    // console.log("trying to create user in database")
 try{
 
     db.query('SELECT * FROM new_schema.users' , async function (err, result, fields) {
@@ -46,73 +54,37 @@ try{
         if(!allUsers.includes(username) || !allEmails.includes(email)){
             const hashedPassword = await bcrypt.hash(password, 10);
             console.log(`creates user ${username}`)
-
             res.send('deu bom')
             const insert = db.query(`INSERT INTO new_schema.users (username, email, password) VALUES ('${username}', '${email}', '${hashedPassword}')`)
             return insert
         }
-            
-
     })
-
-    //     db.query(`INSERT INTO new_schema.users (username, email, password) VALUES ('${username}', '${email}', '${hashedPassword}')`)
-            
-
-
-
-
-   
-        // const hashedPassword = await bcrypt.hash(password, 10);
-        // console.log(`creates user${username}`)
-        // db.query(`INSERT INTO new_schema.users (username, email, password) VALUES ('${username}', '${email}', '${hashedPassword}')`)
   }   
-    
-
-    // try{
-    //     const password =  req.body.password
-    //     const hashedPassword = await bcrypt.hash(password, 10);
-    //     const user = {username: req.body.username, password: hashedPassword};
-    //     users.push(user)
-    //     console.warn(JSON.stringify(user))    
-    //     res.status(201).send()
-    // }
     catch{
         res.status(500).send('deu ruim')
     }
 })
 
-
+//login plus jwt
 app.post('/login', async (req, res)=>{
-
     const password =  req.body.password
     const username = req.body.username
     const email = req.body.email
     const hashedPassword = ""
-
     try{
         const queryval = `SELECT * FROM new_schema.users WHERE username="${username}"` 
         db.query(queryval, async function (err, result, fields) {
             if (err) throw new Error(err)
             const resultPassword = result.map((r)=>r.password)
             const compare = await bcrypt.compare(password.toString(), resultPassword.toString()) 
-            console.log(compare)
             if(compare){
-                // return res.send("logou com sucesso")
-                
-                //da um jwt?
-            
-                
-                // if(req.body.user === 'luiz' && req.body.password === '123'){
-                //     //auth ok
             const id = result.map(r=>r.id)
             const token = jwt.sign({id}, process.env.SECRET, {
-              expiresIn: 43200 // expires in 12h
+            expiresIn: 43200 // expires in 12h
             });
-            return res.json({ auth: true, token: token });
+            return res.json({ auth: true, token: token})
         }
-          res.status(500).json({message: 'Login inválido!'});
-
-       
+          res.status(500).json({message: 'Login inválido!'})
         })
     }
     catch{
@@ -122,25 +94,122 @@ app.post('/login', async (req, res)=>{
 })
 
 
-//logout do luiz tools
-app.post('/logout', function(req, res) {
-    // res.json({ auth: false, token: null });
+
+//cadastro de produtos
+app.post('/addProduct', verifyJWT, (req, res)=>{
+    try{
+        const nome = req.body.nome
+        const preco = req.body.preco
+        // console.log(username, nome, preco)
+        // console.log(`${username}pode adicionar o produto${nome}`);
+    res.status(201).send("adicionando no banco")
+    console.log()
+    const insert = db.query(`INSERT INTO new_schema.products (nomeproduto, preco) VALUES ('${nome}', '${preco}')`)
+    return insert
+}
+    catch{
+        res.status(500)
+    }
 })
+
+// add a order
+app.post("/addtocomanda", verifyJWT, function (req,res){
+    const nomeproduto = req.body.nomeproduto
+    const quantidade = req.body.quantidade
+    const cliente = req.body.cliente
+
+    db.query(`INSERT INTO new_schema.comanda (nomeproduto, quantidade, cliente) VALUES ('${nomeproduto}','${quantidade}','${cliente}') `)
+    res.send("checar se adicionou em get")
+})
+
+// ==============================================================================================================================
+// GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET GET 
+
+// read all products
+app.get("/allProducts", (req,res)=>{
+    db.query("SELECT * FROM new_schema.products", function (err,result,fields){
+    console.log(result.map(r=>r.nomeproduto))
+    console.log(result.map(r=>r.preco))
+    //res send both maps    
+    })
+
+})
+
+// gets all orders
+app.get("/todascomandas", (req,res)=>{
+    db.query("SELECT * FROM new_schema.comanda", function (err,result,fields){
+        console.log(result.map(r=>r.idpedido))
+        console.log(result.map(r=>r.nomeproduto))
+        console.log(result.map(r=>r.quantidade))
+        console.log(result.map(r=>r.cliente))
+    })
+})
+
+// get all orders from 1 customer
+app.get("/comandacliente", verifyJWT, (req,res)=>{
+    const cliente = req.body.cliente
+    db.query(`SELECT * FROM new_schema.comanda WHERE cliente="${cliente}"`, function (err,result,fields){
+        console.log(result)
+    })
+
+})
+
+
+//===========================================================================================================================
+// DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE 
+
+app.delete("/deleteproduct", verifyJWT, (req,res) =>{
+//db query delete product where req.body.product
+const produto =  req.body.nomeproduto
+db.query(`DELETE FROM new_schema.products WHERE nomeproduto='${produto}'`)
+res.send("checa produtos se deu certo")
+})
+
+app.delete("/deletepedido", verifyJWT, (req,res)=>{
+    const idpedido = req.body.idpedido
+    db.query(`DELETE FROM new_schema.comanda WHERE idpedido='${idpedido}'`)
+    console.log('check')
+    res.send('pedido excluido')
+})
+
+
+//===========================================================================================================================
+//  TESTING SECTION TESTING SECTION TESTING SECTION TESTING SECTION TESTING SECTION TESTING SECTION TESTING SECTION 
+
+
+//all users
 app.get('/', (req, res) => {
     console.log('all users from database')
     db.query('SELECT * FROM new_schema.users', function (err, result, fields) {
         if (err) throw new Error(err)
-        
         const allUsers = result.map((r)=> r.username )
-
-        
-
         console.log(allUsers)
     })
-    
-    
     // res.send(`${JSON.stringify(users)}`)
 })
+
+//test if username already exists
+app.post('/tester', async (req,res)=>{
+    const username = req.body.username
+    db.query('SELECT * FROM new_schema.users' , async function (err, result, fields) {
+        //  if (err) throw new Error(err)
+    const allUsers = result.map((r)=> r.username)
+        if(await allUsers.includes(username)) return res.send("ja tem esse usuário")
+    })
+
+})
+
+
+//logout do luiz tools
+app.post('/logout', function(req, res) {
+    // blacklist de tokens?
+    // res.json({ auth: false, token: null });
+    
+})
+
+
+// DEFAULT LISTEN PORT
+
 const port = 3001
 app.listen(port, () =>{
     console.log('rodando servidor')

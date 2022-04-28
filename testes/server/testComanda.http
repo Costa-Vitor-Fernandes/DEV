@@ -1,0 +1,44 @@
+###
+GET http://localhost:3001/todascomandas
+Content-Type: application/json
+
+###
+
+POST http://localhost:3001/addtocomanda
+Content-Type: application/json
+ 
+ {
+     "username": "vito",
+    "nomeproduto": "guarana",
+    "quantidade": 1,
+    "cliente": "jotinha",
+ "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTExODA1NTQsImV4cCI6MTY1MTIyMzc1NH0.MhJMuayag6_jQ29WhOPCTnPXU8grhHQuimR25Hui4WI" }
+
+###
+PATCH http://localhost:3001/comanda
+Content-Type: application/json
+
+{
+
+}
+
+###
+
+DELETE http://localhost:3001/deletepedido
+Content-Type:application/json
+
+{
+    "idpedido": 12,
+    "cliente": "jotinha",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTExODA1NTQsImV4cCI6MTY1MTIyMzc1NH0.MhJMuayag6_jQ29WhOPCTnPXU8grhHQuimR25Hui4WI"
+   }
+
+###
+GET http://localhost:3001/comandacliente
+Content-Type: application/json
+
+{
+    "cliente" : "jotinha",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTExNzQ1NjgsImV4cCI6MTY1MTIxNzc2OH0.oa4VI0T3thxOYTixGEK6wv3qMnS5DX47FEwfotXu-qU"
+
+}
