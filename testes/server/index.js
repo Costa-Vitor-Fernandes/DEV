@@ -67,6 +67,7 @@ try{
 
 //login plus jwt
 app.post('/login', async (req, res)=>{
+    console.log('login')
     const password =  req.body.password
     const username = req.body.username
     const email = req.body.email
