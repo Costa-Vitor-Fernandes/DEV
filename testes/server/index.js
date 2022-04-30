@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require("express")
 const app = express();
-const mysql = require("mysql")
+const mysql = require("mysql2")
 const cors = require('cors')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -113,13 +113,29 @@ app.post('/addProduct', verifyJWT, (req, res)=>{
 })
 
 // add a order
-app.post("/addtocomanda", verifyJWT, function (req,res){
+app.post("/addToComanda", verifyJWT, function (req,res){
     const nomeproduto = req.body.nomeproduto
     const quantidade = req.body.quantidade
     const cliente = req.body.cliente
+    const preco = req.body.preco
 
-    db.query(`INSERT INTO new_schema.comanda (nomeproduto, quantidade, cliente) VALUES ('${nomeproduto}','${quantidade}','${cliente}') `)
+    db.query(`INSERT INTO new_schema.comanda (nomeproduto, quantidade, cliente, preco) VALUES ('${nomeproduto}','${quantidade}','${cliente}', '${preco}') `)
     res.send("checar se adicionou em get")
+})
+
+app.post("/encerrarComanda", verifyJWT, function (req,res){
+   const cliente = req.body.cliente
+   const pagamento =  req.body.pagamento 
+
+   db.query(`UPDATE new_schema.comanda SET status="1", pagamento="${pagamento}" WHERE cliente="${cliente}"`)
+   res.send(`comanda do cliente ${cliente} foi paga com ${pagamento}`)
+
+})
+
+app.post("/editarPrecoProduto", verifyJWT, function(req,res){
+    const nomeproduto= req.body.nomeproduto
+    const novoPreço = req.body.preco
+    db.query(`UPDATE new_schema.products SET preco="${novoPreço}" WHERE nomeproduto="${nomeproduto}" `)
 })
 
 // ==============================================================================================================================
@@ -136,20 +152,31 @@ app.get("/allProducts", (req,res)=>{
 })
 
 // gets all orders
-app.get("/todascomandas", (req,res)=>{
+app.get("/todasComandas", (req,res)=>{
     db.query("SELECT * FROM new_schema.comanda", function (err,result,fields){
         console.log(result.map(r=>r.idpedido))
         console.log(result.map(r=>r.nomeproduto))
         console.log(result.map(r=>r.quantidade))
         console.log(result.map(r=>r.cliente))
+        console.log(result.map(r=>r.preco))
+    })
+})
+app.get("/todasComandasAbertas", (req,res)=>{
+    db.query("SELECT * FROM new_schema.comanda WHERE status='0'", function (err,result,fields){
+        console.log(result.map(r=>r.idpedido))
+        console.log(result.map(r=>r.nomeproduto))
+        console.log(result.map(r=>r.quantidade))
+        console.log(result.map(r=>r.cliente))
+        console.log(result.map(r=>r.preco))
     })
 })
 
 // get all orders from 1 customer
-app.get("/comandacliente", verifyJWT, (req,res)=>{
+app.get("/comandaCliente", verifyJWT, (req,res)=>{
     const cliente = req.body.cliente
     db.query(`SELECT * FROM new_schema.comanda WHERE cliente="${cliente}"`, function (err,result,fields){
-        console.log(result)
+        // retorna os ids dos pedidos
+        console.log(result.map(r=>r.idpedido))
     })
 
 })
@@ -158,18 +185,27 @@ app.get("/comandacliente", verifyJWT, (req,res)=>{
 //===========================================================================================================================
 // DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE 
 
-app.delete("/deleteproduct", verifyJWT, (req,res) =>{
+
+//delete cadastro de produto
+app.delete("/deleteProduct", verifyJWT, (req,res) =>{
 //db query delete product where req.body.product
 const produto =  req.body.nomeproduto
 db.query(`DELETE FROM new_schema.products WHERE nomeproduto='${produto}'`)
 res.send("checa produtos se deu certo")
 })
 
-app.delete("/deletepedido", verifyJWT, (req,res)=>{
+//delete pedido errado
+app.delete("/deletePedido", verifyJWT, (req,res)=>{
     const idpedido = req.body.idpedido
     db.query(`DELETE FROM new_schema.comanda WHERE idpedido='${idpedido}'`)
     console.log('check')
     res.send('pedido excluido')
+})
+
+//deleta a comanda em aberto
+app.delete('/comandaFechada', verifyJWT, (req,res)=>{
+    const cliente = req.body.cliente
+    db.query(`DELETE FROM new_schema.comanda WHERE cliente="${cliente}"`)
 })
 
 

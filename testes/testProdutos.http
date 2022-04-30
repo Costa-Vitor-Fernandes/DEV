@@ -17,10 +17,19 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3001/deleteproduct
+DELETE http://localhost:3001/deleteProduct
 Content-Type:application/json
 
 {
     "nomeproduto": "pepsi",
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTExODA1NTQsImV4cCI6MTY1MTIyMzc1NH0.MhJMuayag6_jQ29WhOPCTnPXU8grhHQuimR25Hui4WI"
+}
+
+###
+POST http://localhost:3001/editarPrecoProduto
+Content-Type: application/json
+
+{
+    "preco": "",
+    "token": ""
 }

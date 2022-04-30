@@ -1,44 +1,52 @@
 ###
-GET http://localhost:3001/todascomandas
+GET http://localhost:3001/todasComandas
+Content-Type: application/json
+
+
+###
+GET http://localhost:3001/todasComandasAbertas
 Content-Type: application/json
 
 ###
 
-POST http://localhost:3001/addtocomanda
+POST http://localhost:3001/addToComanda
 Content-Type: application/json
  
  {
-     "username": "vito",
     "nomeproduto": "guarana",
     "quantidade": 1,
-    "cliente": "jotinha",
- "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTExODA1NTQsImV4cCI6MTY1MTIyMzc1NH0.MhJMuayag6_jQ29WhOPCTnPXU8grhHQuimR25Hui4WI" }
+    "preco" : 5.00,
+    "cliente": "joao",
+     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTEyNjc5MjYsImV4cCI6MTY1MTMxMTEyNn0.Ue-2cBtPl-HqXnXgJVQclSlJNa6dOn7S-kWkBGM9rcw"       }
 
-###
-PATCH http://localhost:3001/comanda
-Content-Type: application/json
 
-{
-
-}
 
 ###
 
-DELETE http://localhost:3001/deletepedido
+DELETE http://localhost:3001/deletePedido
 Content-Type:application/json
 
 {
-    "idpedido": 12,
-    "cliente": "jotinha",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTExODA1NTQsImV4cCI6MTY1MTIyMzc1NH0.MhJMuayag6_jQ29WhOPCTnPXU8grhHQuimR25Hui4WI"
-   }
+    "idpedido": 22,
+     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTEyNjc5MjYsImV4cCI6MTY1MTMxMTEyNn0.Ue-2cBtPl-HqXnXgJVQclSlJNa6dOn7S-kWkBGM9rcw"
+}
 
 ###
-GET http://localhost:3001/comandacliente
+GET http://localhost:3001/comandaCliente
 Content-Type: application/json
 
 {
-    "cliente" : "jotinha",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTExNzQ1NjgsImV4cCI6MTY1MTIxNzc2OH0.oa4VI0T3thxOYTixGEK6wv3qMnS5DX47FEwfotXu-qU"
+    "cliente" : "joao",
+     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTEyNjg1MzAsImV4cCI6MTY1MTMxMTczMH0.NrVZxU2YaNzHdaU0vvXxGNSEBng_mhphWxqqnCbmG0s"
+}
+
+###
+POST http://localhost:3001/encerrarComanda
+Content-Type: application/json
+
+{
+    "cliente" : "joao",
+    "pagamento": "dinheiro",
+     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTEyNjc5MjYsImV4cCI6MTY1MTMxMTEyNn0.Ue-2cBtPl-HqXnXgJVQclSlJNa6dOn7S-kWkBGM9rcw"       
 
 }
