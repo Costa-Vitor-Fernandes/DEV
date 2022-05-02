@@ -14,7 +14,7 @@ import axios from 'axios';
  
  
  
-export default function LoginScreen1() {
+export default function LoginScreen({navigation}) {
  
 const [user,setUser] = useState("")
 const [password,setPassword] = useState("")
@@ -22,7 +22,7 @@ const [password,setPassword] = useState("")
 let token = ""
  
 const loginButton = () =>{
-   console.warn(user,password)
+  //  console.warn(user,password)
  
 /*
 const options = {
@@ -49,12 +49,14 @@ const options = {
     .then(function (response) {
         if (response.data.auth){
             token = response.data.token
+            navigation.navigate("Home")
             // redirect to main page / home page whatever
         }
-        console.warn(response.data.token);
-    })
-    .catch(function (error) {
-        console.error(error);
+        // console.warn(response.data.token);
+      })
+      .catch(function (error) {
+      alert("Login inválido")
+        // console.error(error);
   });
 }
  
@@ -97,7 +99,7 @@ const options = {
              <Text style={styles.loginButtonText}>Login</Text>
            </TouchableOpacity>
            <TouchableOpacity>
-             <Text style={styles.registerText}>
+             <Text style={styles.registerText} >
                Criar Nova Conta
              </Text>
            </TouchableOpacity>
