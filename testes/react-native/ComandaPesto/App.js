@@ -1,11 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, Dimensions } from 'react-native';
 import LoginScreen from './loginPage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useEffect } from 'react';
+import axios from 'axios';
 
-
+const DeviceWidth =  Dimensions.get('window').width
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -20,12 +22,36 @@ function Configuracao (){
   )
 }
 
+function Comanda (){
+  return (
+    <View style={styles.ComandaContainer}>
+      <Text>Nome da comanda</Text>
+    </View>
+  )
+}
+
 function Abertas(){
+
+//   useEffect(()=>{
+//     axios.get('http://192.168.0.30:3001/comandasAbertas', {
+//     })
+//     .then(function (response) {
+//       console.warn(response.data);
+//       })
+//       .catch(function (error) {
+//       // alert("Login inválido")
+//       console.error(error);
+// });
+
+//   },[])
   return(
     <View style={styles.container}>
-      <Text>
-        comandas abertas
-      </Text>
+      <View>
+    <Comanda></Comanda>
+    <Comanda></Comanda>
+    <Comanda></Comanda>
+    </View>
+
       <TouchableOpacity style={styles.addButton}>
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
@@ -80,13 +106,17 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
+    width: Dimensions.get("window").width ,
+    height: Dimensions.get("window").height, 
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    margin:10,
     justifyContent: 'center',
   },
   addButton:{
-    
+    position:"absolute",
+    top:600,
+    left:310,
     width:65,
     borderRadius: 100,
     backgroundColor: "#999"
@@ -96,6 +126,13 @@ const styles = StyleSheet.create({
     paddingBottom:5,
     textAlign:'center',
     fontSize:40,
-
+  },
+  ComandaContainer:{
+    margin:5,
+    width:Dimensions.get('window').width/3 - 5,
+    height:Dimensions.get("window").height/4-10,
+    position:'relative',
+    backgroundColor:"#aaa"
   }
+
 });
