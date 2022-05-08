@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useEffect } from 'react';
 import axios from 'axios';
+import TesteAbertas from './testeAbertas';
 
 const DeviceWidth =  Dimensions.get('window').width
 
@@ -46,12 +47,6 @@ function Abertas(){
 //   },[])
   return(
     <View style={styles.container}>
-      <View>
-    <Comanda></Comanda>
-    <Comanda></Comanda>
-    <Comanda></Comanda>
-    </View>
-
       <TouchableOpacity style={styles.addButton}>
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
@@ -69,11 +64,31 @@ function Fechadas(){
     </View>
   )
 }
+
+function Testao () {
+//   useEffect(()=>{
+//     axios.get('http://192.168.0.30:3001/todasComandasAbertas')
+//         .then(function (response) {
+//           console.warn(response.data) // todos ids
+//         });
+// })
+  return(
+    <View style={styles.container}>
+<TesteAbertas></TesteAbertas>
+<TouchableOpacity style={styles.addButton}>
+        <Text style={styles.buttonText}>+</Text>
+      </TouchableOpacity>
+    </View>
+  )
+}
+
+
 function Home() {
   return (
     <Tab.Navigator>
       <Tab.Screen name="Abertas" component={Abertas}  />
-      <Tab.Screen name="Fechadas" component={Fechadas}  />
+
+      <Tab.Screen name="Testao" component={Testao}  />
       <Tab.Screen name="Configurações" component={Configuracao}  />
     </Tab.Navigator>
   );
@@ -110,7 +125,6 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height, 
     flex: 1,
     backgroundColor: '#fff',
-    margin:10,
     justifyContent: 'center',
   },
   addButton:{
@@ -119,7 +133,16 @@ const styles = StyleSheet.create({
     left:310,
     width:65,
     borderRadius: 100,
-    backgroundColor: "#999"
+    backgroundColor: "#ddd",
+    shadowColor: "black",
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.46,
+    shadowRadius: 11.14,
+    
+    elevation: 17,
   },
   buttonText:{
     margin:0,
@@ -132,7 +155,8 @@ const styles = StyleSheet.create({
     width:Dimensions.get('window').width/3 - 5,
     height:Dimensions.get("window").height/4-10,
     position:'relative',
-    backgroundColor:"#aaa"
-  }
+    backgroundColor:"#aaa",
+
+  },
 
 });
