@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useEffect } from 'react';
 import axios from 'axios';
 import TesteAbertas from './testeAbertas';
-
+import TabAbertas from './tabAbertas';
 const DeviceWidth =  Dimensions.get('window').width
 
 const Tab = createBottomTabNavigator();
@@ -31,28 +31,28 @@ function Comanda (){
   )
 }
 
-function Abertas(){
+// function Abertas(){
 
-//   useEffect(()=>{
-//     axios.get('http://192.168.0.30:3001/comandasAbertas', {
-//     })
-//     .then(function (response) {
-//       console.warn(response.data);
-//       })
-//       .catch(function (error) {
-//       // alert("Login inválido")
-//       console.error(error);
-// });
+// //   useEffect(()=>{
+// //     axios.get('http://192.168.0.30:3001/comandasAbertas', {
+// //     })
+// //     .then(function (response) {
+// //       console.warn(response.data);
+// //       })
+// //       .catch(function (error) {
+// //       // alert("Login inválido")
+// //       console.error(error);
+// // });
 
-//   },[])
-  return(
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.addButton}>
-        <Text style={styles.buttonText}>+</Text>
-      </TouchableOpacity>
-    </View>
-  )
-}
+// //   },[])
+//   return(
+//     <View style={styles.container}>
+//       <TouchableOpacity style={styles.addButton}>
+//         <Text style={styles.buttonText}>+</Text>
+//       </TouchableOpacity>
+//     </View>
+//   )
+// }
 
 
 function Fechadas(){
@@ -72,10 +72,14 @@ function Testao () {
 //           console.warn(response.data) // todos ids
 //         });
 // })
+const addCliente = () =>{
+  console.log('addClientes')
+}
+
   return(
     <View style={styles.container}>
 <TesteAbertas></TesteAbertas>
-<TouchableOpacity style={styles.addButton}>
+<TouchableOpacity style={styles.addButton} onPress={addCliente}>
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
     </View>
@@ -84,11 +88,16 @@ function Testao () {
 
 
 function Home() {
+  const refreshData = () =>{
+    console.warn('refreshData')
+  }
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Abertas" component={Abertas}  />
+      <Tab.Screen name="Abertas" component={TabAbertas}  />
 
-      <Tab.Screen name="Testao" component={Testao}  />
+      <Tab.Screen name="Testao" component={Testao}
+       options={{headerRight:()=>(<Button style={{marginLeft: 10}} title="refresh" onPress={refreshData}></Button>)}}
+      />
       <Tab.Screen name="Configurações" component={Configuracao}  />
     </Tab.Navigator>
   );

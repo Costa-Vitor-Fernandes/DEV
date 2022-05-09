@@ -198,6 +198,7 @@ app.get("/todasComandasAbertas", (req,res)=>{
 // req.query to axios.get("") {params: {params}}
 app.get("/comandaCliente", (req,res)=>{
     const cliente = req.query.cliente
+    // req.query.cliente pro axios...
     console.log(cliente)
 
     

@@ -21,8 +21,10 @@ Content-Type: application/json
     "nomeproduto": "coca cola",
     "quantidade": 1,
     "preco" : 5.00,
-    "cliente": "06",
-     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTE3MjM0NTgsImV4cCI6MTY1MTc2NjY1OH0.xLJgS95YVrtTiJj_HpYzWExMzF6MhDg8AbA3xeaUQQ8"}
+    "cliente": "emari s2",
+       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTIwNzIyNzcsImV4cCI6MTY1MjExNTQ3N30.SAl2LW9Ulp0v8LCvj6cpL-rTQf2dRVDv87QnBLGdVsA"
+ }
+
 ###
 
 DELETE http://localhost:3001/deletePedido
@@ -38,8 +40,8 @@ GET http://localhost:3001/comandaCliente
 Content-Type: application/json
 
 {
-    "cliente" : "vitor",
-     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTEyNjg1MzAsImV4cCI6MTY1MTMxMTczMH0.NrVZxU2YaNzHdaU0vvXxGNSEBng_mhphWxqqnCbmG0s"
+    "cliente" : "vitor"
+     
 }
 
 ###

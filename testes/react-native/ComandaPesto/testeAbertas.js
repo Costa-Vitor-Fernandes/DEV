@@ -5,23 +5,8 @@ import axios from "axios"
 
 
 const numColumns = 3;
-const data = [
-  { key: 'Bruno' }
-];
 
-// const formatData = (data, numColumns) => {
-//   const numberOfFullRows = Math.floor(data.length / numColumns);
-
-//   let numberOfElementsLastRow = data.length - (numberOfFullRows * numColumns);
-//   while (numberOfElementsLastRow !== numColumns && numberOfElementsLastRow !== 0) {
-//     data.push({ key: `blank-${numberOfElementsLastRow}`, empty: true });
-//     numberOfElementsLastRow++;
-//   }
-
-//   return data;
-// };
-
-const popUpComanda = (cliente) =>{
+popUpComanda = (cliente) =>{
 const token = ''
 console.warn(cliente)
 
@@ -44,43 +29,53 @@ console.warn(cliente)
 
 export default class TesteAbertas extends React.Component {
   constructor(props){
-    super(props)
-    axios.get('http://192.168.0.30:3001/todosClientesAbertos', {
+    super(props);
+    this.state={
+        eachCliente : "",
+    }
+     this.getClientes = this.getClientes.bind(this);
+    }
+
+    getClientes(){
+        axios.get("http://192.168.0.30:3001/todosClientesAbertos", {
+        }).then((res) => {
+          const obj = []
+            const arrClientes = res.data
+            arrClientes.forEach((e, i, arrClientes)=>{
+              obj.push({key : arrClientes[i]})
+            })
+    this.setState({
+        eachCliente: obj,
     })
-    .then(function (response) {
-      const arrClientes = response.data
-      console.warn(arrClientes)
-      arrClientes.forEach((e, i, arrClientes) =>{
-         
-        data.push({key : arrClientes[i]})
-      });
-      })
-      .catch(function (error) {
-      alert("Nao tem ngm ainda")
-      console.error(error)
-    })
-    this.state = { }
+});
+      
 
+}
+componentDidMount() {
+this.getClientes()
 
+}
 
-  }
-
-  // componentDidMount() {
-  //   axios.get('http://192.168.0.30:3001/todosClientesAbertos', {
-  //   })
-  //   .then(function (response) {
-  //     const arrClientes = response.data
-  //     console.warn(arrClientes)
-  //     arrClientes.forEach((e, i, arrClientes) =>{
-  //       data.push({key : arrClientes[i]})
-  //     });
-  //     })
-  //     .catch(function (error) {
-  //     alert("Nao tem ngm ainda")
-  //     console.error(error);
-  //   })
-  // }
-
+  popUpComanda = (cliente) =>{
+    const token = ''
+    console.warn(cliente)
+    
+      axios.get('http://192.168.0.30:3001/comandaCliente', {
+        // body da req deve conter nome do cliente: nome e token: "TOKEN"
+        params: {
+          cliente: cliente,
+          token: token,
+        },  
+    
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
+            })
+            .then(function (response) {
+              console.warn(response.data);
+              }).catch(error => console.log(error));
+    }
 
   formatData = (data, numColumns) => {
     const numberOfFullRows = Math.floor(data.length / numColumns);
@@ -99,6 +94,7 @@ export default class TesteAbertas extends React.Component {
 
     
   renderItem = ({ item, index }) => {
+    // console.log('log item',item)
     if (item.empty === true) {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
@@ -116,19 +112,22 @@ export default class TesteAbertas extends React.Component {
 
   render(    
   ) {
-    return (
 
-      <FlatList
-        data={this.formatData(data, numColumns)}
+
+      return (
+        
+        <FlatList
+        data={this.formatData(this.state.eachCliente, numColumns)}
         style={styles.flatListContainer}
         renderItem={this.renderItem}
         numColumns={numColumns}
         />
- 
-    );
-  }
-}
-
+        
+        );
+      }
+    }
+  
+    
 const styles = StyleSheet.create({
   flatListContainer: {
     flex: 1,
