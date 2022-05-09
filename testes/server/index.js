@@ -67,6 +67,7 @@ try{
 
 //login plus jwt
 app.post('/login', async (req, res)=>{
+    console.log('login')
     const password =  req.body.password
     const username = req.body.username
     const email = req.body.email
@@ -148,8 +149,21 @@ app.get("/allProducts", (req,res)=>{
     console.log(result.map(r=>r.preco))
     //res send both maps    
     })
-
 })
+
+
+app.get("/todosClientesAbertos", (req,res)=>{
+    db.query("SELECT * FROM new_schema.comanda WHERE status='0' ", function(err,result,fields){
+        // res.json cada cliente
+        const obj =  result.map(r=>r.cliente)
+        //separa por unico 
+        const cadaCliente = [...new Set(obj)]
+        console.log(cadaCliente)
+        res.json(cadaCliente)
+
+    })
+})
+
 
 // gets all orders
 app.get("/todasComandas", (req,res)=>{
@@ -168,15 +182,31 @@ app.get("/todasComandasAbertas", (req,res)=>{
         console.log(result.map(r=>r.quantidade))
         console.log(result.map(r=>r.cliente))
         console.log(result.map(r=>r.preco))
+        const obj = {
+            id: result.map(r=>r.idpedido),
+            nomeproduto: result.map(r=>r.nomeproduto),
+            quantidade: result.map(r=>r.quantidade),
+            cliente: result.map(r=>r.cliente),
+            preco:result.map(r=>r.preco)   
+        }
+        res.json(obj)
     })
 })
 
 // get all orders from 1 customer
-app.get("/comandaCliente", verifyJWT, (req,res)=>{
-    const cliente = req.body.cliente
+// adicionar verifyJWT como middleware depois
+// req.query to axios.get("") {params: {params}}
+app.get("/comandaCliente", (req,res)=>{
+    const cliente = req.query.cliente
+    // req.query.cliente pro axios...
+    console.log(cliente)
+
+    
+    // talvez eu deva implementar aqui o status = 0 pra nao pagas e fazer
+    // outra rota so pra pagos
     db.query(`SELECT * FROM new_schema.comanda WHERE cliente="${cliente}"`, function (err,result,fields){
-        // retorna os ids dos pedidos
         console.log(result.map(r=>r.idpedido))
+        // retornar os ids dos pedidos com res send json 
     })
 
 })

@@ -4,6 +4,11 @@ Content-Type: application/json
 
 
 ###
+GET http://localhost:3001/todosClientesAbertos
+Content-Type: application/json
+
+
+###
 GET http://localhost:3001/todasComandasAbertas
 Content-Type: application/json
 
@@ -13,13 +18,12 @@ POST http://localhost:3001/addToComanda
 Content-Type: application/json
  
  {
-    "nomeproduto": "guarana",
+    "nomeproduto": "coca cola",
     "quantidade": 1,
     "preco" : 5.00,
-    "cliente": "joao",
-     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTEyNjc5MjYsImV4cCI6MTY1MTMxMTEyNn0.Ue-2cBtPl-HqXnXgJVQclSlJNa6dOn7S-kWkBGM9rcw"       }
-
-
+    "cliente": "emari s2",
+       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTIwNzIyNzcsImV4cCI6MTY1MjExNTQ3N30.SAl2LW9Ulp0v8LCvj6cpL-rTQf2dRVDv87QnBLGdVsA"
+ }
 
 ###
 
@@ -36,8 +40,8 @@ GET http://localhost:3001/comandaCliente
 Content-Type: application/json
 
 {
-    "cliente" : "joao",
-     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTEyNjg1MzAsImV4cCI6MTY1MTMxMTczMH0.NrVZxU2YaNzHdaU0vvXxGNSEBng_mhphWxqqnCbmG0s"
+    "cliente" : "vitor"
+     
 }
 
 ###
