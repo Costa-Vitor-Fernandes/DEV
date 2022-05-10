@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useEffect, Component } from 'react';
+import { StyleSheet, Text, View, FlatList, Dimensions, TouchableOpacity, Modal, Pressable } from 'react-native';
 import axios from "axios"
 
 
@@ -27,13 +27,19 @@ console.warn(cliente)
           }).catch(error => console.log(error));
 }
 
-export default class TesteAbertas extends React.Component {
+export default class TesteAbertas extends Component {
   constructor(props){
     super(props);
-    this.state={
+      this.state={
         eachCliente : "",
+        modalVisible: false
+      }
+    
+    this.getClientes = this.getClientes.bind(this);
     }
-     this.getClientes = this.getClientes.bind(this);
+
+    setModalVisible = (visible) => {
+      this.setState({ modalVisible: visible });
     }
 
     getClientes(){
@@ -75,7 +81,8 @@ this.getClientes()
             .then(function (response) {
               console.warn(response.data);
               }).catch(error => console.log(error));
-    }
+
+}
 
   formatData = (data, numColumns) => {
     const numberOfFullRows = Math.floor(data.length / numColumns);
@@ -112,17 +119,20 @@ this.getClientes()
 
   render(    
   ) {
+    const { modalVisible } = this.state;   
 
 
       return (
-        
+        <View style={styles.viewdaflatlist}>
+          <Modalzinhu></Modalzinhu>
+         
         <FlatList
         data={this.formatData(this.state.eachCliente, numColumns)}
         style={styles.flatListContainer}
         renderItem={this.renderItem}
         numColumns={numColumns}
         />
-        
+        </View>
         );
       }
     }
@@ -150,5 +160,108 @@ const styles = StyleSheet.create({
   itemText: {
     color: '#fff',
   },
+  viewdaflatlist:{
+    height: Dimensions.get('window').height-100,
+    
+  },
+  modalContainer:{
+    height: Dimensions.get('window').height-300,
+    backgroundColor: '#999',
+
+  },
+  /*
+  exemplo
+  */
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  }
 
 });
+
+
+class Modalzinhu extends Component {
+  state = {
+    modalVisible: false
+  };
+
+  setModalVisible = (visible) => {
+    this.setState({ modalVisible: visible });
+  }
+
+  render() {
+    const { modalVisible } = this.state;
+    return (
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            this.setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Hello World!</Text>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => this.setModalVisible(!modalVisible)}
+              >
+                <Text style={styles.textStyle}>Hide Modal</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+        {/* </View> */}
+
+{/* isso aqui é meu render item de lá */}
+
+        <Pressable
+          style={[styles.button, styles.buttonOpen]}
+          onPress={() => this.setModalVisible(true)}
+        >
+          <Text style={styles.textStyle}>Show Modal</Text>
+        </Pressable>
+      </View>
+    );
+  }
+}
