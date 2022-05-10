@@ -6,43 +6,48 @@ import axios from "axios"
 
 const numColumns = 3;
 
-popUpComanda = (cliente) =>{
-const token = ''
-console.warn(cliente)
 
-  axios.get('http://192.168.0.30:3001/comandaCliente', {
-    // body da req deve conter nome do cliente: nome e token: "TOKEN"
-    params: {
-      cliente: cliente,
-      token: token,
-    },  
+// popUpComanda = (cliente) =>{
+// const token = ''
+// console.warn(cliente)
 
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json;charset=UTF-8'
-    },
-        })
-        .then(function (response) {
-          console.warn(response.data);
-          }).catch(error => console.log(error));
-}
+//   axios.get('http://192.168.0.30:3001/comandaCliente', {
+//     // body da req deve conter nome do cliente: nome e token: "TOKEN"
+//     params: {
+//       cliente: cliente,
+//       token: token,
+//     },  
+
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'application/json;charset=UTF-8'
+//     },
+//         })
+//         .then(function (response) {
+//           console.warn(response.data);
+//           }).catch(error => console.log(error));
+// }
 
 export default class TesteAbertas extends Component {
   constructor(props){
     super(props);
       this.state={
         eachCliente : "",
-        modalVisible: false
+        modalVisible: false,
+        cliente: ""
       }
     
     this.getClientes = this.getClientes.bind(this);
     }
 
-    setModalVisible = (visible) => {
+setModalVisible = (visible) => {
       this.setState({ modalVisible: visible });
-    }
+}
+// getfunctionGetClientes = ()=>{
+//   return
+// }
 
-    getClientes(){
+getClientes(){
         axios.get("http://192.168.0.30:3001/todosClientesAbertos", {
         }).then((res) => {
           const obj = []
@@ -63,8 +68,10 @@ this.getClientes()
 }
 
   popUpComanda = (cliente) =>{
-    const token = ''
-    console.warn(cliente)
+    const token = '' 
+    this.setState({
+      modalVisible: !this.state.modalVisible
+    })
     
       axios.get('http://192.168.0.30:3001/comandaCliente', {
         // body da req deve conter nome do cliente: nome e token: "TOKEN"
@@ -82,6 +89,9 @@ this.getClientes()
               console.warn(response.data);
               }).catch(error => console.log(error));
 
+            this.setState({
+              cliente: cliente
+            })
 }
 
   formatData = (data, numColumns) => {
@@ -101,38 +111,69 @@ this.getClientes()
 
     
   renderItem = ({ item, index }) => {
+    const modalVisible = this.state.modalVisible
     // console.log('log item',item)
+
     if (item.empty === true) {
       return <View style={[styles.item, styles.itemInvisible]} />;
     }
     return (
-        <TouchableOpacity
+      <View style={styles.viewdaflatlist} >
+
+      <Modal
+       animationType="fade"
+       transparent={true}
+       visible={modalVisible}
+       onRequestClose={() => {
+        //  Alert.alert("Modal has been closed."); 
+         this.setState({modalVisible:!modalVisible});
+         
+       }}>
+         <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Conta de {this.state.cliente}</Text>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => {
+                //  console.log('pressed')
+                  this.setState({ modalVisible: !modalVisible})}}
+              >
+                <Text style={styles.textStyle}>voltar</Text>
+              </Pressable>
+            </View>
+          </View>
+      </Modal>
+        <Pressable
            style={styles.item}
-           onPress={()=>popUpComanda(item.key)}
-        >
+           onPress={()=>
+            this.popUpComanda(item.key)
+          }
+           >
             
         <Text style={styles.itemText}>{item.key}</Text>
           
-      </TouchableOpacity>
+      </Pressable>
+          </View>
     );
   };
 
   render(    
   ) {
     const { modalVisible } = this.state;   
-
+    // this.renderItem
 
       return (
-        <View style={styles.viewdaflatlist}>
-          <Modalzinhu></Modalzinhu>
+        // <View style={styles.viewdaflatlist}>
+        //<Modalzinhu></Modalzinhu>    
          
         <FlatList
         data={this.formatData(this.state.eachCliente, numColumns)}
         style={styles.flatListContainer}
         renderItem={this.renderItem}
         numColumns={numColumns}
+        extraData={this.state.modalVisible}
         />
-        </View>
+        // </View>
         );
       }
     }
@@ -161,7 +202,9 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   viewdaflatlist:{
-    height: Dimensions.get('window').height-100,
+    height: Dimensions.get('window').width/numColumns,
+    width: Dimensions.get('window').width/3,
+    
     
   },
   modalContainer:{
@@ -212,6 +255,9 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center"
+  },
+  viewAntesDoModal:{
+    backgroundColor: "#999",
   }
 
 });
@@ -241,12 +287,12 @@ class Modalzinhu extends Component {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>Hello World!</Text>
+              <Text style={styles.modalText}>conta do vitor</Text>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => this.setModalVisible(!modalVisible)}
               >
-                <Text style={styles.textStyle}>Hide Modal</Text>
+                <Text style={styles.textStyle}>voltar</Text>
               </Pressable>
             </View>
           </View>
@@ -259,7 +305,7 @@ class Modalzinhu extends Component {
           style={[styles.button, styles.buttonOpen]}
           onPress={() => this.setModalVisible(true)}
         >
-          <Text style={styles.textStyle}>Show Modal</Text>
+          <Text style={styles.textStyle}>vitor</Text>
         </Pressable>
       </View>
     );
