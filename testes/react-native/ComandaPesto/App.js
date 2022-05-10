@@ -65,7 +65,7 @@ function Fechadas(){
   )
 }
 
-function Testao () {
+function Testao (props) {
 //   useEffect(()=>{
 //     axios.get('http://192.168.0.30:3001/todasComandasAbertas')
 //         .then(function (response) {
@@ -78,7 +78,7 @@ const addCliente = () =>{
 
   return(
     <View style={styles.container}>
-<TesteAbertas></TesteAbertas>
+<TesteAbertas name={props.route.params}  ></TesteAbertas>
 <TouchableOpacity style={styles.addButton} onPress={addCliente}>
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
@@ -88,18 +88,23 @@ const addCliente = () =>{
 
 
 function Home() {
-  const refreshData = () =>{
+  const refreshData = (f) =>{
     console.warn('refreshData')
-  }
+    f
+    
+    
+}
   return (
     <Tab.Navigator>
       <Tab.Screen name="Abertas" component={TabAbertas}  />
 
       <Tab.Screen name="Testao" component={Testao}
+       initialParams={{id:1}}
+       params={{param: 'parametro vitomaluco'}}
        options={{headerRight:()=>(<View
                                     style={styles.botaoheader}
-                                     onPress={refreshData}>
-                                       <Button title="Atualizar" />
+                                     >
+                                       <Button onPress={refreshData} title="Atualizar" />
                                      </View>)}}
       />
       <Tab.Screen name="Configurações" component={Configuracao}  />
@@ -176,7 +181,7 @@ const styles = StyleSheet.create({
   position: 'absolute',
   textAlign:'center',
   right:15,
-  width:Dimensions.get('window').width/6 - 5,
+  width:Dimensions.get('window').width/4 +5,
   backgroundColor:"blue",
   },
   refreshbutton:{

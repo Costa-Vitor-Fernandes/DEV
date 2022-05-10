@@ -68,6 +68,7 @@ this.getClientes()
 }
 
   popUpComanda = (cliente) =>{
+    console.log(this.props.name)
     const token = '' 
     this.setState({
       modalVisible: !this.state.modalVisible
