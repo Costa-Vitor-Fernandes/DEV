@@ -96,7 +96,11 @@ function Home() {
       <Tab.Screen name="Abertas" component={TabAbertas}  />
 
       <Tab.Screen name="Testao" component={Testao}
-       options={{headerRight:()=>(<Button style={{marginLeft: 10}} title="refresh" onPress={refreshData}></Button>)}}
+       options={{headerRight:()=>(<View
+                                    style={styles.botaoheader}
+                                     onPress={refreshData}>
+                                       <Button title="Atualizar" />
+                                     </View>)}}
       />
       <Tab.Screen name="Configurações" component={Configuracao}  />
     </Tab.Navigator>
@@ -167,5 +171,16 @@ const styles = StyleSheet.create({
     backgroundColor:"#aaa",
 
   },
+  botaoheader:{
+  height:40,
+  position: 'absolute',
+  textAlign:'center',
+  right:15,
+  width:Dimensions.get('window').width/6 - 5,
+  backgroundColor:"blue",
+  },
+  refreshbutton:{
+    
+  }
 
 });

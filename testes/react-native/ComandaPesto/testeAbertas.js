@@ -132,6 +132,7 @@ this.getClientes()
          <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>Conta de {this.state.cliente}</Text>
+              {/* add aqui as coisas da conta que puxar do cliente */}
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => {
@@ -203,7 +204,7 @@ const styles = StyleSheet.create({
   },
   viewdaflatlist:{
     height: Dimensions.get('window').width/numColumns,
-    width: Dimensions.get('window').width/3,
+    width: Dimensions.get('window').width/3 - 5,
     
     
   },
