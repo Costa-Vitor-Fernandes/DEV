@@ -95,7 +95,7 @@ function Home() {
     <Tab.Navigator>
       <Tab.Screen name="Abertas" component={TabAbertas}  />
 
-      <Tab.Screen name="Testao" component={Testao(props)}
+      <Tab.Screen name="Testao" component={Testao}
        options={{headerRight:()=>(<Button style={{marginLeft: 10}} title="refresh" onPress={refreshData}></Button>)}}
       />
       <Tab.Screen name="Configurações" component={Configuracao}  />
