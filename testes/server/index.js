@@ -206,6 +206,16 @@ app.get("/comandaCliente", (req,res)=>{
     // outra rota so pra pagos
     db.query(`SELECT * FROM new_schema.comanda WHERE cliente="${cliente}"`, function (err,result,fields){
         console.log(result.map(r=>r.idpedido))
+        console.log(result.map(r=>r.nomeproduto))
+        console.log(result.map(r=>r.preco))
+        console.log(result.map(r=>r.quantidade))
+        const obj ={
+            id: result.map(r=>r.idpedido),
+            nomeproduto: result.map(r=>r.nomeproduto),
+            quantidade: result.map(r=>r.quantidade),
+            preco:result.map(r=>r.preco)
+        }
+        res.json(obj)
         // retornar os ids dos pedidos com res send json 
     })
 

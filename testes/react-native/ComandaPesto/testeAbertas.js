@@ -34,7 +34,8 @@ export default class TesteAbertas extends Component {
       this.state={
         eachCliente : "",
         modalVisible: false,
-        cliente: ""
+        cliente: "",
+        comandaCompleta: "",
       }
     
     this.getClientes = this.getClientes.bind(this);
@@ -48,7 +49,7 @@ setModalVisible = (visible) => {
 // }
 
 getClientes(){
-        axios.get("http://192.168.0.30:3001/todosClientesAbertos", {
+        axios.get("http://192.168.0.17:3001/todosClientesAbertos", {
         }).then((res) => {
           const obj = []
             const arrClientes = res.data
@@ -67,14 +68,45 @@ this.getClientes()
 
 }
 
+
+getComandaCliente(cliente){
+  console.log('getComandacliente')
+
+  axios.get("http://192.168.0.17:3001/comandaCliente", {
+      params: {
+      cliente: cliente,
+      // token: token,
+    },  
+
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json;charset=UTF-8'
+    },
+  }).then((res) => {
+    console.log(res.data)
+    const obj = []
+      const comandaClienteCompleta = Object.entries(res.data)
+      //Object.keys and Object.Values pode ser interessante
+      
+      // comandaClienteCompleta.forEach((e, i, comandaClienteCompleta)=>{
+      //   obj.push(comandaClienteCompleta[i])
+      // })
+      this.setState({comandaCompleta: comandaClienteCompleta })
+      console.log(this.state.comandaClienteCompleta, 'obj setState')
+})
+}
+
   popUpComanda = (cliente) =>{
-    console.log(this.props.name)
+    // puxar a comanda completa
+    //this.getComandaCliente(cliente)
+    this.getComandaCliente(cliente)
+    // console.log(this.props.logic)
     const token = '' 
     this.setState({
       modalVisible: !this.state.modalVisible
     })
     
-      axios.get('http://192.168.0.30:3001/comandaCliente', {
+      axios.get('http://192.168.0.17:3001/comandaCliente', {
         // body da req deve conter nome do cliente: nome e token: "TOKEN"
         params: {
           cliente: cliente,
@@ -87,7 +119,7 @@ this.getClientes()
         },
             })
             .then(function (response) {
-              console.warn(response.data);
+              // console.warn(response.data);
               }).catch(error => console.log(error));
 
             this.setState({
@@ -134,6 +166,11 @@ this.getClientes()
             <View style={styles.modalView}>
               <Text style={styles.modalText}>Conta de {this.state.cliente}</Text>
               {/* add aqui as coisas da conta que puxar do cliente */}
+              <Text>{this.state.comandaCompleta} comanda</Text>
+              {/* add aqui as coisas da conta que puxar do cliente */}
+              
+              
+              
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => {
@@ -162,20 +199,19 @@ this.getClientes()
   render(    
   ) {
     const { modalVisible } = this.state;   
-    // this.renderItem
+
 
       return (
-        // <View style={styles.viewdaflatlist}>
-        //<Modalzinhu></Modalzinhu>    
+       
          
         <FlatList
         data={this.formatData(this.state.eachCliente, numColumns)}
         style={styles.flatListContainer}
         renderItem={this.renderItem}
         numColumns={numColumns}
-        extraData={this.state.modalVisible}
+        extraData={[this.state.modalVisible, this.state.comandaCompleta]}
         />
-        // </View>
+        
         );
       }
     }

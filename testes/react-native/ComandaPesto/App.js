@@ -4,10 +4,9 @@ import LoginScreen from './loginPage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import TesteAbertas from './testeAbertas';
-import TabAbertas from './tabAbertas';
 const DeviceWidth =  Dimensions.get('window').width
 
 const Tab = createBottomTabNavigator();
@@ -72,13 +71,17 @@ function Testao (props) {
 //           console.warn(response.data) // todos ids
 //         });
 // })
+
+
 const addCliente = () =>{
   console.log('addClientes')
+  console.log(props.route.params, 'getState')
+  console.log(props.getParent)
 }
 
   return(
     <View style={styles.container}>
-<TesteAbertas name={props.route.params}  ></TesteAbertas>
+<TesteAbertas params={props.route.params}  logic={props.route.params.logic} ></TesteAbertas>
 <TouchableOpacity style={styles.addButton} onPress={addCliente}>
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
@@ -88,23 +91,34 @@ const addCliente = () =>{
 
 
 function Home() {
+
+  const [eachCliente,setEachCliente] = useState('')
+  const [logic,setLogic] = useState('a')
+
   const refreshData = (f) =>{
     console.warn('refreshData')
     f
     
     
 }
+const atualizar =()=>{
+  setTimeout(()=>{
+    console.log("atualizar")
+
+    setLogic('paugroso')
+    console.log(logic,"logic")
+  },2000)
+}
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Abertas" component={TabAbertas}  />
+      
 
       <Tab.Screen name="Testao" component={Testao}
-       initialParams={{id:1}}
-       params={{param: 'parametro vitomaluco'}}
+       initialParams={()=>logic}
        options={{headerRight:()=>(<View
                                     style={styles.botaoheader}
                                      >
-                                       <Button onPress={refreshData} title="Atualizar" />
+                                       <Button onPress={atualizar} title="Atualizar" />
                                      </View>)}}
       />
       <Tab.Screen name="Configurações" component={Configuracao}  />
