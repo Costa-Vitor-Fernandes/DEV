@@ -48,6 +48,11 @@ setModalVisible = (visible) => {
 // }
 
 getClientes(){
+
+// aqui eu devo pegar props do pai, e aí setar each client tô props
+// e passar esse get pra lá atualizando essa props q eu vou passar
+// talvez if props = undefined axios.get
+
         axios.get("http://192.168.0.30:3001/todosClientesAbertos", {
         }).then((res) => {
           const obj = []
