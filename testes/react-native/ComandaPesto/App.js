@@ -16,8 +16,14 @@ function Configuracao (){
   return(
     <View>
       <Text>
-        config
+        Configurações Configurações Configurações
       </Text>
+      <Button title="Encerrar o Dia(Exportar p/ Excel)"></Button>
+      <Button title="Adicionar Produtos"></Button>
+      <Button title="Alterar Preço"></Button>
+      <Button title="Excluir Produtos"></Button>
+      <Button title="Cadastrar novo Login"></Button>
+      <Button title="Todos Pedidos Abertos e Fechados / id"></Button>
     </View>
   )
 }
@@ -75,8 +81,7 @@ function Testao (props) {
 
 const addCliente = () =>{
   console.log('addClientes')
-  console.log(props.route.params, 'getState')
-  console.log(props.getParent)
+  // axios.post novo cliente e produto
 }
 
   return(
@@ -113,13 +118,14 @@ const atualizar =()=>{
     <Tab.Navigator>
       
 
-      <Tab.Screen name="Testao" component={Testao}
+      <Tab.Screen name="Abertas" component={Testao}
        initialParams={()=>logic}
-       options={{headerRight:()=>(<View
-                                    style={styles.botaoheader}
-                                     >
-                                       <Button onPress={atualizar} title="Atualizar" />
-                                     </View>)}}
+       options={{headerRight: (props)=>
+        <View
+        style={styles.botaoheader}
+         >
+           <Button title="Atualizar" />
+         </View> }}
       />
       <Tab.Screen name="Configurações" component={Configuracao}  />
     </Tab.Navigator>
@@ -129,7 +135,7 @@ const atualizar =()=>{
 export default function App() {
   return (
      <NavigationContainer>
-    <Home><Button title="botao"></Button></Home>
+    <Home></Home>
      </NavigationContainer>
     //   <Stack.Navigator>
     //     <Stack.Screen
@@ -161,10 +167,10 @@ const styles = StyleSheet.create({
   },
   addButton:{
     position:"absolute",
-    top:600,
-    left:310,
+    top:Dimensions.get("window").height-200,
+    left:Dimensions.get("window").width-100,
     width:65,
-    borderRadius: 100,
+    borderRadius: 50,
     backgroundColor: "#ddd",
     shadowColor: "black",
     shadowOffset: {

@@ -85,13 +85,13 @@ getComandaCliente(cliente){
   }).then((res) => {
     console.log(res.data)
     const obj = []
-      const comandaClienteCompleta = Object.entries(res.data)
+      const comandaClienteCompleta = Object.values(res.data)
       //Object.keys and Object.Values pode ser interessante
       
       // comandaClienteCompleta.forEach((e, i, comandaClienteCompleta)=>{
       //   obj.push(comandaClienteCompleta[i])
       // })
-      this.setState({comandaCompleta: comandaClienteCompleta })
+      this.setState({comandaCompleta: comandaClienteCompleta }) // formatar aqui as coisa
       console.log(this.state.comandaClienteCompleta, 'obj setState')
 })
 }
@@ -166,7 +166,7 @@ getComandaCliente(cliente){
             <View style={styles.modalView}>
               <Text style={styles.modalText}>Conta de {this.state.cliente}</Text>
               {/* add aqui as coisas da conta que puxar do cliente */}
-              <Text>{this.state.comandaCompleta} comanda</Text>
+              <Text>{this.state.comandaCompleta}</Text>
               {/* add aqui as coisas da conta que puxar do cliente */}
               
               
@@ -179,6 +179,8 @@ getComandaCliente(cliente){
               >
                 <Text style={styles.textStyle}>voltar</Text>
               </Pressable>
+              <Pressable><Text>Pagar</Text></Pressable>
+              <Text>Total R$</Text>
             </View>
           </View>
       </Modal>
