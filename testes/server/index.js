@@ -32,6 +32,9 @@ function verifyJWT(req, res, next){
 }    
         
 
+// trocar nome do cliente = trocar de numero de mesa
+// exportar ser um modal coringa, que define varias opções de exportação
+
 
 
 //==============================================================================================================================

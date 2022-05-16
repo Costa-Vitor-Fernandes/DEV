@@ -92,15 +92,12 @@ getComandaCliente(cliente){
       //   obj.push(comandaClienteCompleta[i])
       // })
       this.setState({comandaCompleta: comandaClienteCompleta }) // formatar aqui as coisa
-      console.log(this.state.comandaClienteCompleta, 'obj setState')
+      
 })
 }
 
   popUpComanda = (cliente) =>{
-    // puxar a comanda completa
-    //this.getComandaCliente(cliente)
     this.getComandaCliente(cliente)
-    // console.log(this.props.logic)
     const token = '' 
     this.setState({
       modalVisible: !this.state.modalVisible
@@ -200,7 +197,13 @@ getComandaCliente(cliente){
 
   render(    
   ) {
-    const { modalVisible } = this.state;   
+    const { modalVisible } = this.state; 
+
+    if (this.props.refresh){
+      this.getClientes()
+      console.log('atualizando')
+
+    }
 
 
       return (

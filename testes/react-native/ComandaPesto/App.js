@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, Dimensions, Modal, Pressable  } from 'react-native';
 import LoginScreen from './loginPage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import axios from 'axios';
 import TesteAbertas from './testeAbertas';
 const DeviceWidth =  Dimensions.get('window').width
@@ -70,23 +70,67 @@ function Fechadas(){
   )
 }
 
-function Testao (props) {
-//   useEffect(()=>{
-//     axios.get('http://192.168.0.30:3001/todasComandasAbertas')
-//         .then(function (response) {
-//           console.warn(response.data) // todos ids
-//         });
-// })
+function Testao ({navigation}) {
+  
+  
+  const [modalVisible,setModalVisible] = useState(false)
+  const [refresh, setRefresh] = useState(false)
 
+  
+      useLayoutEffect(()=>{
+        navigation.setOptions({
+          headerRight: ()=> (<View
+             style={styles.botaoheader}
+              >
+                <Button onPress={()=>setRefresh(!refresh)} title="Atualizar" />
+              </View>)
+        })
+        setTimeout(()=>{
+          setRefresh(false)
+        },100) // checar esse tempo de porta dps
+      },[navigation, refresh])
+  
 
 const addCliente = () =>{
-  console.log('addClientes')
-  // axios.post novo cliente e produto
+  setModalVisible(!modalVisible)
+  
+  // axios.post novo cliente e produto da lista de produtos
 }
 
   return(
     <View style={styles.container}>
-<TesteAbertas params={props.route.params}  logic={props.route.params.logic} ></TesteAbertas>
+<TesteAbertas refresh={refresh} >
+
+
+
+</TesteAbertas>
+<Modal
+       animationType="fade"
+       transparent={true}
+       visible={modalVisible}
+       onRequestClose={() => {
+        //  Alert.alert("Modal has been closed."); 
+         setModalVisible(!modalVisible)
+       }}>
+         <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Adicionar</Text>
+              {/* add aqui as coisas pra adicionar o cliente */}
+              
+              
+              
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => {
+                //  console.log('pressed')
+               setModalVisible(!modalVisible)}}
+              >
+                <Text style={styles.textStyle}>voltar</Text>
+              </Pressable>
+            </View>
+          </View>
+      </Modal>
+
 <TouchableOpacity style={styles.addButton} onPress={addCliente}>
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
@@ -119,13 +163,12 @@ const atualizar =()=>{
       
 
       <Tab.Screen name="Abertas" component={Testao}
-       initialParams={()=>logic}
-       options={{headerRight: (props)=>
-        <View
-        style={styles.botaoheader}
-         >
-           <Button title="Atualizar" />
-         </View> }}
+      //  options={{headerRight: (props)=>
+      //   <View
+      //   style={styles.botaoheader}
+      //    >
+      //      <Button title="Atualizar" />
+      //    </View> }}
       />
       <Tab.Screen name="Configurações" component={Configuracao}  />
     </Tab.Navigator>
@@ -206,6 +249,50 @@ const styles = StyleSheet.create({
   },
   refreshbutton:{
     
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  },
+  viewAntesDoModal:{
+    backgroundColor: "#999",
   }
 
 });
