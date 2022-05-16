@@ -21,8 +21,8 @@ Content-Type: application/json
     "nomeproduto": "coca cola",
     "quantidade": 3,
     "preco" : 5.00,
-    "cliente": "avo da emari",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzNdLCJpYXQiOjE2NTI2NTc3NTMsImV4cCI6MTY1MjcwMDk1M30.EOjnOp6GbEV2nwQccFGV22uDlsKQvriftU79sgR0euA"
+    "cliente": "lu",
+"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzNdLCJpYXQiOjE2NTI2NjMwNTYsImV4cCI6MTY1MjcwNjI1Nn0.IWzUlWaaxYpRD5CnJUTDsGXjJR-wiXAXsSwA6somXkc"
 }
 
 
@@ -32,8 +32,8 @@ DELETE http://localhost:3001/deletePedido
 Content-Type:application/json
 
 {
-    "idpedido": 22,
-     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTEyNjc5MjYsImV4cCI6MTY1MTMxMTEyNn0.Ue-2cBtPl-HqXnXgJVQclSlJNa6dOn7S-kWkBGM9rcw"
+    "idpedido": 43,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzNdLCJpYXQiOjE2NTI2NjY2MTEsImV4cCI6MTY1MjcwOTgxMX0.v34ZNJvw1Il1R-nvkhrTDMV0rCPp_zDy81S319EHq6g"
 }
 
 ###

@@ -22,7 +22,7 @@ const [password,setPassword] = useState("")
 let token = ""
  
 const loginButton = () =>{
-  //  console.warn(user,password)
+   console.warn(user,password)
  
 /*
 const options = {
@@ -42,7 +42,10 @@ const options = {
       console.log(response.status);
     });
 */
-    axios.post('http://192.168.0.30:3001/login', {
+
+
+// as vezes o ip muda
+    axios.post('http://192.168.0.17:3001/login', {
         username:user,
         password:password
     })
