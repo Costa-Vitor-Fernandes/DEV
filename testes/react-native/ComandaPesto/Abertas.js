@@ -24,6 +24,8 @@ export default function Abertas (props){
     const [quantidade,setQuantidade]=useState('')
     const [preco,setPreco] = useState("")
     const [novoProduto,setNovoProduto] = useState("")
+    const [qntdAntesDaMudanca, setQntdAntesDaMudanca]= useState('')
+    const [idOndeMudou, setIdOndeMudou] = useState([])
    
 
     //useEffect on getClientes()
@@ -107,12 +109,24 @@ const formatData = (data, numColumns) => {
     return data;
   };
 
-  const setter = (q)=>{
+  const setQntd = (q,id)=>{
+    if (!idOndeMudou.includes(id)){
+      setIdOndeMudou(idOndeMudou.concat(id))
+    }
+    setQntdAntesDaMudanca(quantidade)
     setQuantidade(q)
-    console.log('quantidade parent', quantidade)
   }
   
+const aplicarMudanca = () =>{
+  // console.log(qntdAntesDaMudanca, 'antes')
+console.log(quantidade, 'qnt atual')
+console.log(id)
+console.log(idOndeMudou, 'idondeMudou')
+// axios.post pra dar update onde mudou no banco nesses ids. tem que desmembrar provavelmente, com indexOf ids e idOndeMudou
 
+// terminou de aplicar a mudanca fecha o modal
+setModalVisible(!modalVisible)  
+}
     
  const renderItem = ({ item, index }) => {
     
@@ -149,7 +163,7 @@ const formatData = (data, numColumns) => {
               </View>
               {/* View do resultado \/ */}
 
-              <ListaResultadoComanda nome={nomeproduto} preco={preco} quantidade={quantidade} id={id} setQntd={setter} />
+              <ListaResultadoComanda nome={nomeproduto} preco={preco} quantidade={quantidade} id={id} setQntd={setQntd} />
 
 
 {/* 
@@ -177,15 +191,22 @@ const formatData = (data, numColumns) => {
               
               
               
-              <Pressable
+              <TouchableOpacity
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => {
                 //  console.log('pressed')
+                setCliente('')
+                setIdOndeMudou([])
+                setQuantidade("")
+                setPreco('')
                 setModalVisible(!modalVisible)  
                 }}
               >
                 <Text style={styles.textStyle}>voltar</Text>
-              </Pressable>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={aplicarMudanca}>
+                <Text>Aplicar Mudanças</Text>
+              </TouchableOpacity>
               
               <TouchableOpacity><Text>Pagar</Text></TouchableOpacity>
               <Text>Total R$</Text>
@@ -324,10 +345,21 @@ const styles = StyleSheet.create({
   });
   
 function ListaResultadoComanda (props) {
+  
 
-const plusButton=(i)=>{
+const plusButton = (i)=>{
+  const arrId = props.id[i]
   const arrQntd = [...props.quantidade]
   const result = props.quantidade[i]+1
+  arrQntd.splice(i,1,result)
+  console.log(arrQntd, 'arr qntd', props.quantidade, 'props quantidade', arrId, 'arrids')
+  props.setQntd(arrQntd, arrId)
+}
+const minusButton=(i)=>{
+
+  const arrQntd = [...props.quantidade]
+  const result = props.quantidade[i]-1
+  if (result === 0) return 
   arrQntd.splice(i,1,result)
   console.log(arrQntd, 'arr qntd', props.quantidade, 'props quantidade')
   props.setQntd(arrQntd)
@@ -346,7 +378,7 @@ const plusButton=(i)=>{
         obj.push(<Text  style={styles.linhaDaComanda}>{props.id[i]}</Text>)
         obj.push(<Text  style={styles.linhaDaComanda}>{props.nome[i]}</Text>)
         obj.push(<Text  style={styles.linhaDaComanda}>{props.preco[i]}</Text>)
-        obj.push(<Button title='-'></Button>)
+        obj.push(<Button onPress={()=>minusButton(i)} title='-'></Button>)
         obj.push(<Text  style={styles.linhaDaComanda}>{props.quantidade[i]}</Text>)
         obj.push(<Button onPress={()=>plusButton(i)} title='+'></Button>)
         linha.push(<View style={{flexDirection:'row', backgroundColor:'#056252'}}>{obj}</View>)
@@ -356,7 +388,7 @@ const plusButton=(i)=>{
         obj.push(<Text  style={styles.linhaDaComanda2}>{props.id[i]}</Text>)
         obj.push(<Text  style={styles.linhaDaComanda2}>{props.nome[i]}</Text>)
         obj.push(<Text  style={styles.linhaDaComanda2}>{props.preco[i]}</Text>)
-        obj.push(<Button title='-'></Button>)
+        obj.push(<Button onPress={()=>minusButton(i)} title='-'></Button>)
         obj.push(<Text  style={styles.linhaDaComanda2}>{props.quantidade[i]}</Text>)
         obj.push(<Button onPress={()=>plusButton(i)} title='+'></Button>)
         linha.push(<View style={{flexDirection:'row', backgroundColor:'#ddd' }}>{obj}</View>)
