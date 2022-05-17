@@ -26,7 +26,6 @@ export default function Abertas (props){
     const [novoProduto,setNovoProduto] = useState("")
    
 
-
     //useEffect on getClientes()
     // componentDidMount() {
     //     this.getClientes()
@@ -108,6 +107,10 @@ const formatData = (data, numColumns) => {
     return data;
   };
 
+  const setter = (q)=>{
+    setQuantidade(q)
+    console.log('quantidade parent', quantidade)
+  }
   
 
     
@@ -146,7 +149,7 @@ const formatData = (data, numColumns) => {
               </View>
               {/* View do resultado \/ */}
 
-              <ListaResultadoComanda nome={nomeproduto} preco={preco} quantidade={quantidade} id={id} />
+              <ListaResultadoComanda nome={nomeproduto} preco={preco} quantidade={quantidade} id={id} setQntd={setter} />
 
 
 {/* 
@@ -322,8 +325,19 @@ const styles = StyleSheet.create({
   
 function ListaResultadoComanda (props) {
 
+const plusButton=(i)=>{
+  const arrQntd = [...props.quantidade]
+  const result = props.quantidade[i]+1
+  arrQntd.splice(i,1,result)
+  console.log(arrQntd, 'arr qntd', props.quantidade, 'props quantidade')
+  props.setQntd(arrQntd)
+}
+
+
+
   if(props.id.length>1){
     const linha = []
+    // console.log(props.quantidade, 'props quantidade')
     for (let i =0; i<props.id.length;i++){
       // adicionar key pra cada
       
@@ -332,18 +346,20 @@ function ListaResultadoComanda (props) {
         obj.push(<Text  style={styles.linhaDaComanda}>{props.id[i]}</Text>)
         obj.push(<Text  style={styles.linhaDaComanda}>{props.nome[i]}</Text>)
         obj.push(<Text  style={styles.linhaDaComanda}>{props.preco[i]}</Text>)
-        // botao de mais e menos
+        obj.push(<Button title='-'></Button>)
         obj.push(<Text  style={styles.linhaDaComanda}>{props.quantidade[i]}</Text>)
-        linha.push(<View key={i}  style={{flexDirection:'row', backgroundColor:'#056252'}}>{obj}</View>)
+        obj.push(<Button onPress={()=>plusButton(i)} title='+'></Button>)
+        linha.push(<View style={{flexDirection:'row', backgroundColor:'#056252'}}>{obj}</View>)
       }
       if(i%2 !== 0){
         const obj = []
         obj.push(<Text  style={styles.linhaDaComanda2}>{props.id[i]}</Text>)
         obj.push(<Text  style={styles.linhaDaComanda2}>{props.nome[i]}</Text>)
         obj.push(<Text  style={styles.linhaDaComanda2}>{props.preco[i]}</Text>)
-        // botao de mais e menos
+        obj.push(<Button title='-'></Button>)
         obj.push(<Text  style={styles.linhaDaComanda2}>{props.quantidade[i]}</Text>)
-        linha.push(<View key={i}  style={{flexDirection:'row', backgroundColor:'#ddd' }}>{obj}</View>)
+        obj.push(<Button onPress={()=>plusButton(i)} title='+'></Button>)
+        linha.push(<View style={{flexDirection:'row', backgroundColor:'#ddd' }}>{obj}</View>)
       }
     }
     
