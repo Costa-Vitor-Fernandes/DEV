@@ -135,13 +135,21 @@ const formatData = (data, numColumns) => {
             <View style={styles.modalView}>
               <Text style={styles.modalText}>Conta de {cliente}</Text>
               {/* add aqui as coisas da conta que puxar do cliente */}
-              <View style={{backgroundColor:'#ccc', flexDirection:"row", textAlign:'center'}}>
+              
+              {/* View do header */}
+              <View style={{backgroundColor:'#000', flexDirection:"row", textAlign:'center', marginBottom:1, height:50, alignItems:'center'}}>
 
-              <Text style={styles.linhaDaComanda}>id </Text>
-              <Text style={styles.linhaDaComanda}>nome </Text>
-              <Text style={styles.linhaDaComanda}>preco </Text>
-              <Text style={styles.linhaDaComanda}>quantidade </Text>
+              <Text style={styles.linhaDaComandaHeader}>ID </Text>
+              <Text style={styles.linhaDaComandaHeader}>NOME </Text>
+              <Text style={styles.linhaDaComandaHeader}>PREÇO </Text>
+              <Text style={styles.linhaDaComandaHeader}>QNTD </Text>
               </View>
+              {/* View do resultado \/ */}
+
+              <ListaResultadoComanda nome={nomeproduto} preco={preco} quantidade={quantidade} id={id} />
+
+
+{/* 
               <View style={{backgroundColor:'#056252', flexDirection:'row', textAlign:"center"}}>
 
               <Text style={styles.linhaDaComanda}>{id} </Text>
@@ -153,7 +161,11 @@ const formatData = (data, numColumns) => {
               <Text >{quantidade} </Text>
               <Button title='+'></Button>
               </View>
-              </View>
+              </View> */}
+               {/* View do resultado /\ */}
+
+
+              {/* botao de adicionar */}
               <View style={{flex:1, flexDirection:'row', width:'100%', textAlign: 'center', }}>
               <TextInput onChangeText={setNovoProduto} placeholder='adicionar um produto' value={novoProduto} style={{backgroundColor:"#eee", width:"100%", paddingLeft:10}}></TextInput>
               <Button title="+" />
@@ -171,7 +183,7 @@ const formatData = (data, numColumns) => {
               >
                 <Text style={styles.textStyle}>voltar</Text>
               </Pressable>
-              <TouchableOpacity><Text>Adicionar produto</Text></TouchableOpacity>
+              
               <TouchableOpacity><Text>Pagar</Text></TouchableOpacity>
               <Text>Total R$</Text>
             </View>
@@ -288,10 +300,66 @@ const styles = StyleSheet.create({
     idList:{
       backgroundColor:"#777"
     },
+    linhaDaComandaHeader:{
+      width: Dimensions.get('window').width /5,
+      margin: 1,
+      textAlign:'center',
+      color:"white"
+    },
     linhaDaComanda:{
       width: Dimensions.get('window').width /5,
       margin: 1,
+      textAlign:'center'
+    },
+    linhaDaComanda2:{
+      width: Dimensions.get('window').width /5,
+      margin: 1,
+      textAlign:'center'
+      
     }
   
   });
   
+function ListaResultadoComanda (props) {
+
+  if(props.id.length>1){
+    const linha = []
+    for (let i =0; i<props.id.length;i++){
+      // adicionar key pra cada
+      
+      if(i%2 === 0){
+        const obj = []
+        obj.push(<Text  style={styles.linhaDaComanda}>{props.id[i]}</Text>)
+        obj.push(<Text  style={styles.linhaDaComanda}>{props.nome[i]}</Text>)
+        obj.push(<Text  style={styles.linhaDaComanda}>{props.preco[i]}</Text>)
+        // botao de mais e menos
+        obj.push(<Text  style={styles.linhaDaComanda}>{props.quantidade[i]}</Text>)
+        linha.push(<View key={i}  style={{flexDirection:'row', backgroundColor:'#056252'}}>{obj}</View>)
+      }
+      if(i%2 !== 0){
+        const obj = []
+        obj.push(<Text  style={styles.linhaDaComanda2}>{props.id[i]}</Text>)
+        obj.push(<Text  style={styles.linhaDaComanda2}>{props.nome[i]}</Text>)
+        obj.push(<Text  style={styles.linhaDaComanda2}>{props.preco[i]}</Text>)
+        // botao de mais e menos
+        obj.push(<Text  style={styles.linhaDaComanda2}>{props.quantidade[i]}</Text>)
+        linha.push(<View key={i}  style={{flexDirection:'row', backgroundColor:'#ddd' }}>{obj}</View>)
+      }
+    }
+    
+    return <View style={{flexDirection:'column'}}>{linha}</View>
+  }
+return(
+  <View style={{backgroundColor:'#056252', flexDirection:'row', textAlign:"center"}}>
+  <Text style={styles.linhaDaComanda}>{props.id} </Text>
+  <Text style={styles.linhaDaComanda}>{props.nome} </Text>
+  <Text style={styles.linhaDaComanda}>{props.preco} </Text>
+  <View style={{flexDirection:'row', justifyContent:'space-between',  width: Dimensions.get('window').width /5,
+margin: 1,}}>
+    <Button title='-'></Button>
+  <Text >{props.quantidade} </Text>
+  <Button title='+'></Button>
+  </View>
+  </View>
+)
+}
