@@ -133,6 +133,8 @@ const formatData = (data, numColumns) => {
 });
   }
   
+
+
 const aplicarMudanca = () =>{
   // console.log(qntdAntesDaMudanca, 'antes')
 console.log(quantidade, 'qnt atual')
@@ -140,18 +142,44 @@ console.log(id)
 console.log(idOndeMudou, 'idondeMudou')
 // axios.post pra dar update onde mudou no banco nesses ids. tem que desmembrar provavelmente, com indexOf ids e idOndeMudou
 
+// quando adicionar mais de um pedido existente
 if(idOndeMudou.length>1){
-
+  console.log(idOndeMudou)
+for(let i in idOndeMudou){
+  const quantidadeOndeMudou = quantidade[id.indexOf(idOndeMudou[i])]
+  updateQuantidade(idOndeMudou[i], quantidadeOndeMudou)
+  setIdOndeMudou([])
+}
 }
 if(idOndeMudou.length===1){
   const quantidadeOndeMudou = quantidade[id.indexOf(idOndeMudou[0])]
   updateQuantidade(idOndeMudou[0], quantidadeOndeMudou)
+  setIdOndeMudou([])
 }
 
 
 
 // terminou de aplicar a mudanca fecha o modal
 setModalVisible(!modalVisible)  
+}
+const renderTotal = () =>{
+  if(id.length>1){
+    let total = null
+    for (let i in preco){
+      total+=preco[i]*quantidade[i]
+    }
+    return total
+  }
+  if(id.length===1){
+    return preco*quantidade
+  }
+}
+
+const addPeloTextInput = () =>{
+  // novoProduto, cliente q ta clicado e mandar um post 
+  console.log(cliente, novoProduto)
+  // limpa novoProduto aqui
+  //fecha o modal ao fim?
 }
     
  const renderItem = ({ item, index }) => {
@@ -191,27 +219,14 @@ setModalVisible(!modalVisible)
 
               <ListaResultadoComanda nome={nomeproduto} preco={preco} quantidade={quantidade} id={id} setQntd={setQntd} />
 
-
-{/* 
-              <View style={{backgroundColor:'#056252', flexDirection:'row', textAlign:"center"}}>
-
-              <Text style={styles.linhaDaComanda}>{id} </Text>
-              <Text style={styles.linhaDaComanda}>{nomeproduto} </Text>
-              <Text style={styles.linhaDaComanda}>{preco} </Text>
-              <View style={{flexDirection:'row', justifyContent:'space-between',  width: Dimensions.get('window').width /5,
-      margin: 1,}}>
-                <Button title='-'></Button>
-              <Text >{quantidade} </Text>
-              <Button title='+'></Button>
-              </View>
-              </View> */}
                {/* View do resultado /\ */}
 
 
               {/* botao de adicionar */}
               <View style={{flex:1, flexDirection:'row', width:'100%', textAlign: 'center', }}>
-              <TextInput onChangeText={setNovoProduto} placeholder='adicionar um produto' value={novoProduto} style={{backgroundColor:"#eee", width:"100%", paddingLeft:10}}></TextInput>
-              <Button title="+" />
+              {/* <TextInput onChangeText={setNovoProduto} placeholder='adicionar um produto' value={novoProduto} style={{backgroundColor:"#eee", width:"100%", paddingLeft:10}}></TextInput> */}
+                <TextInput placeholder='adicione um produto' onChangeText={setNovoProduto} value={novoProduto} style={{backgroundColor:"#eee", width:"100%", paddingLeft:10}} />
+              <Button onPress={addPeloTextInput} title="+" />
               </View>
               {/* add aqui as coisas da conta que puxar do cliente */}
               
@@ -235,7 +250,7 @@ setModalVisible(!modalVisible)
               </TouchableOpacity>
               
               <TouchableOpacity><Text>Pagar</Text></TouchableOpacity>
-              <Text>Total R$</Text>
+              <Text>Total R${renderTotal()}</Text>
             </View>
           </View>
       </Modal>
@@ -382,13 +397,13 @@ const plusButton = (i)=>{
   props.setQntd(arrQntd, arrId)
 }
 const minusButton=(i)=>{
-
+  const arrId = props.id[i]
   const arrQntd = [...props.quantidade]
   const result = props.quantidade[i]-1
   if (result === 0) return 
   arrQntd.splice(i,1,result)
   console.log(arrQntd, 'arr qntd', props.quantidade, 'props quantidade')
-  props.setQntd(arrQntd)
+  props.setQntd(arrQntd,arrId)
 }
 
 
@@ -430,9 +445,9 @@ return(
   <Text style={styles.linhaDaComanda}>{props.preco} </Text>
   <View style={{flexDirection:'row', justifyContent:'space-between',  width: Dimensions.get('window').width /5,
 margin: 1,}}>
-    <Button title='-'></Button>
+    <Button onPress={()=>minusButton(0)} title='-'></Button>
   <Text >{props.quantidade} </Text>
-  <Button title='+'></Button>
+  <Button onPress={()=>plusButton(0)} title='+'></Button>
   </View>
   </View>
 )
