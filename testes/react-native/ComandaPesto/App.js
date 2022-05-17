@@ -1,142 +1,79 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, Dimensions, Modal, Pressable, TextInput  } from 'react-native';
 import LoginScreen from './loginPage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import axios from 'axios';
-import TesteAbertas from './testeAbertas';
-import TabAbertas from './tabAbertas';
+import Configuracao from './Configuracao';
+import Abertas from './Abertas';
+
 const DeviceWidth =  Dimensions.get('window').width
 
+const token = ''
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-function Configuracao (){
-  return(
-    <View>
-      <Text>
-        config
-      </Text>
-    </View>
-  )
-}
-
-function Comanda (){
-  return (
-    <View style={styles.ComandaContainer}>
-      <Text>Nome da comanda</Text>
-    </View>
-  )
-}
-
-// function Abertas(){
-
-// //   useEffect(()=>{
-// //     axios.get('http://192.168.0.30:3001/comandasAbertas', {
-// //     })
-// //     .then(function (response) {
-// //       console.warn(response.data);
-// //       })
-// //       .catch(function (error) {
-// //       // alert("Login inválido")
-// //       console.error(error);
-// // });
-
-// //   },[])
-//   return(
-//     <View style={styles.container}>
-//       <TouchableOpacity style={styles.addButton}>
-//         <Text style={styles.buttonText}>+</Text>
-//       </TouchableOpacity>
-//     </View>
-//   )
-// }
 
 
-function Fechadas(){
-  return(
-    <View>
-      <Text>
-        comandas fechadas
-      </Text>
-    </View>
-  )
-}
+function TabAbertas ({navigation}) {
+  const [quantidade,setQuantidade]= useState("")
+  const [novoCliente, setNovoCliente] = useState("")
+  const [modalVisible,setModalVisible] = useState(false)
+  const [refresh, setRefresh] = useState(false)
+  const [produto,setProduto] = useState("")
+  const [preco, setPreco] = useState('')
+  const [color,setColor]= useState("#24a0ed")
 
-function Testao (props) {
-//   useEffect(()=>{
-//     axios.get('http://192.168.0.30:3001/todasComandasAbertas')
-//         .then(function (response) {
-//           console.warn(response.data) // todos ids
-//         });
-// })
+  
+      useLayoutEffect(()=>{
+        navigation.setOptions({
+          headerRight: ()=> (<View
+             style={styles.botaoheader}
+              >
+                <Button onPress={()=>setRefresh(!refresh)} title="Atualizar" />
+              </View>)
+        })
+        setTimeout(()=>{
+          setRefresh(false)
+        
+        },1000) // checar esse tempo de porta dps
+      },[navigation, refresh])
+  
+
 const addCliente = () =>{
-  console.log('addClientes')
+  setModalVisible(!modalVisible) 
+  setColor("#24a0ed")
+  // axios.get produtos e precos da lista de produtos e setar um estado
+  // esse estado vai pra Lista que vai renderizar no lugar do textinput de listinha de produto
 }
-
-  return(
-    <View style={styles.container}>
-<TesteAbertas name={props.route.params}  ></TesteAbertas>
-<TouchableOpacity style={styles.addButton} onPress={addCliente}>
-        <Text style={styles.buttonText}>+</Text>
-      </TouchableOpacity>
-    </View>
-  )
+const adicionarNovoCliente = () =>{
+  setColor("green")
+  
+  // passando preco estatico por enquanto
+  const preco = 5
+  console.log('info do que da sendo adicionado', novoCliente, quantidade, produto)
+  axios.post('http://192.168.0.17:3001/addToComanda', {
+        cliente:novoCliente,
+        quantidade:quantidade,
+        nomeproduto:produto,
+        preco: preco,
+        token: token
+    })
+    .then(function (response) {
+        if (response.data.auth){
+            token = response.data.token
+            navigation.navigate("Home")
+            // redirect to main page / home page whatever
+        }
+        // console.warn(response.data.token);
+      })
+      .catch(function (error) {
+      alert("Login inválido")
+        // console.error(error);
+  });
 }
-
-
-function Home() {
-  const refreshData = (f) =>{
-    console.warn('refreshData')
-    f
-    
-    
-}
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name="Abertas" component={TabAbertas}  />
-
-      <Tab.Screen name="Testao" component={Testao}
-       initialParams={{id:1}}
-       params={{param: 'parametro vitomaluco'}}
-       options={{headerRight:()=>(<View
-                                    style={styles.botaoheader}
-                                     >
-                                       <Button onPress={refreshData} title="Atualizar" />
-                                     </View>)}}
-      />
-      <Tab.Screen name="Configurações" component={Configuracao}  />
-    </Tab.Navigator>
-  );
-}
-
-export default function App() {
-  return (
-     <NavigationContainer>
-    <Home><Button title="botao"></Button></Home>
-     </NavigationContainer>
-    //   <Stack.Navigator>
-    //     <Stack.Screen
-    //       name="Login"
-    //       component={LoginScreen}
-    //       options={{ headerShown: false }}
-    //     />
-    //     <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-    //     {/* <Stack.Screen name="Settings" component={Messages} />  */}
-    //   </Stack.Navigator>
-    // </NavigationContainer>
-  );
-}
-
-
-// export default function App() {
-//   return (
-// <LoginScreen1></LoginScreen1>
-//   );
-// }
-
 const styles = StyleSheet.create({
   container: {
     width: Dimensions.get("window").width ,
@@ -147,10 +84,10 @@ const styles = StyleSheet.create({
   },
   addButton:{
     position:"absolute",
-    top:600,
-    left:310,
+    top:Dimensions.get("window").height-200,
+    left:Dimensions.get("window").width-100,
     width:65,
-    borderRadius: 100,
+    borderRadius: 50,
     backgroundColor: "#ddd",
     shadowColor: "black",
     shadowOffset: {
@@ -186,6 +123,154 @@ const styles = StyleSheet.create({
   },
   refreshbutton:{
     
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    backgroundColor:"#999"
+    
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  },
+  viewAntesDoModal:{
+    backgroundColor: "#999",
+  },
+  adicionar:{
+    backgroundColor: color,
+    borderRadius:50,
+    height:30,
+    justifyContent:'center',
   }
 
 });
+
+  return(
+    <View style={styles.container}>
+<Abertas refresh={refresh} />
+<Modal
+       animationType="fade"
+       transparent={true}
+       visible={modalVisible}
+       onRequestClose={() => {
+        //  Alert.alert("Modal has been closed."); 
+         setModalVisible(!modalVisible)
+       }}>
+         <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Adicionar</Text>
+              {/* add aqui as coisas pra adicionar o cliente // style**** */}
+              <TextInput
+        style={styles.input}
+        onChangeText={setNovoCliente}
+        placeholder="Nome/Mesa do Cliente"
+      />
+      {/* esse text input aqui tem que ser uma lista dos produtos q eu dei get quando cliquei o botao do modal,
+       mas por enquanto vai ser um input, e vai da merda no banco se não tiver esse produto lá */}
+      <TextInput
+        style={styles.input}
+        placeholder="Listinha de produtos"
+        onChangeText={setProduto}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Qntd"
+        type='numeric'
+        keyboardType="numeric"
+        onChangeText={setQuantidade}
+      />
+              <TouchableOpacity
+                style={styles.adicionar}
+                onPress={() => {
+                  adicionarNovoCliente()}}
+              >
+                <Text style={styles.textStyle}>adicionar</Text>
+              </TouchableOpacity>
+              
+              
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => {
+                //  console.log('pressed')
+               setModalVisible(!modalVisible)}}
+              >
+                <Text style={styles.textStyle}>voltar</Text>
+              </Pressable>
+            </View>
+          </View>
+      </Modal>
+
+<TouchableOpacity style={styles.addButton} onPress={addCliente}>
+        <Text style={styles.buttonText}>+</Text>
+      </TouchableOpacity>
+    </View>
+  )
+}
+
+
+function Home() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Abertas" component={TabAbertas}
+      />
+      <Tab.Screen name="Configurações" component={Configuracao}  />
+    </Tab.Navigator>
+  );
+}
+
+export default function App() {
+  return (
+     <NavigationContainer>
+    {/* <Home></Home> */}
+    
+       <Stack.Navigator>
+         <Stack.Screen
+           name="Login"
+           component={LoginScreen}
+           options={{ headerShown: false }}
+         />
+         <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+       
+         </Stack.Navigator>
+     </NavigationContainer>
+  );
+}
+
+
+
+
+

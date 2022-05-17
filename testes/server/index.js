@@ -32,6 +32,9 @@ function verifyJWT(req, res, next){
 }    
         
 
+// trocar nome do cliente = trocar de numero de mesa
+// exportar ser um modal coringa, que define varias opções de exportação
+
 
 
 //==============================================================================================================================
@@ -114,7 +117,7 @@ app.post('/addProduct', verifyJWT, (req, res)=>{
 })
 
 // add a order
-app.post("/addToComanda", verifyJWT, function (req,res){
+app.post("/addToComanda", function (req,res){
     const nomeproduto = req.body.nomeproduto
     const quantidade = req.body.quantidade
     const cliente = req.body.cliente
@@ -204,8 +207,18 @@ app.get("/comandaCliente", (req,res)=>{
     
     // talvez eu deva implementar aqui o status = 0 pra nao pagas e fazer
     // outra rota so pra pagos
-    db.query(`SELECT * FROM new_schema.comanda WHERE cliente="${cliente}"`, function (err,result,fields){
+    db.query(`SELECT * FROM new_schema.comanda WHERE cliente="${cliente}" AND status=0 `, function (err,result,fields){
         console.log(result.map(r=>r.idpedido))
+        console.log(result.map(r=>r.nomeproduto))
+        console.log(result.map(r=>r.preco))
+        console.log(result.map(r=>r.quantidade))
+        const obj ={
+            id: result.map(r=>r.idpedido),
+            nomeproduto: result.map(r=>r.nomeproduto),
+            quantidade: result.map(r=>r.quantidade),
+            preco:result.map(r=>r.preco)
+        }
+        res.json(obj)
         // retornar os ids dos pedidos com res send json 
     })
 
