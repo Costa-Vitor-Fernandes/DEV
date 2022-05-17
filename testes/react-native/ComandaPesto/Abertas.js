@@ -14,6 +14,7 @@ import {
 import axios from 'axios';
  
 const numColumns = 3;
+const token = ''
 
 export default function Abertas (props){
     const [eachCliente,setEachCliente] = useState("")
@@ -116,6 +117,21 @@ const formatData = (data, numColumns) => {
     setQntdAntesDaMudanca(quantidade)
     setQuantidade(q)
   }
+
+  const updateQuantidade = (id, quantidade) =>{
+    
+    axios.post('http://192.168.0.17:3001/updateQuantidade', {
+      quantidade:quantidade,
+      id:id,
+      token: token
+  })
+  .then(function (response) {
+      console.log(response.data)
+    })
+    .catch(function (error) {
+      // console.error(error);
+});
+  }
   
 const aplicarMudanca = () =>{
   // console.log(qntdAntesDaMudanca, 'antes')
@@ -123,6 +139,16 @@ console.log(quantidade, 'qnt atual')
 console.log(id)
 console.log(idOndeMudou, 'idondeMudou')
 // axios.post pra dar update onde mudou no banco nesses ids. tem que desmembrar provavelmente, com indexOf ids e idOndeMudou
+
+if(idOndeMudou.length>1){
+
+}
+if(idOndeMudou.length===1){
+  const quantidadeOndeMudou = quantidade[id.indexOf(idOndeMudou[0])]
+  updateQuantidade(idOndeMudou[0], quantidadeOndeMudou)
+}
+
+
 
 // terminou de aplicar a mudanca fecha o modal
 setModalVisible(!modalVisible)  

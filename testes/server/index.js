@@ -135,6 +135,13 @@ app.post("/encerrarComanda", verifyJWT, function (req,res){
    res.send(`comanda do cliente ${cliente} foi paga com ${pagamento}`)
 
 })
+app.post('/updateQuantidade', function(req,res){
+    const quantidade = req.body.quantidade
+    const id = req.body.id
+
+ db.query(`UPDATE new_schema.comanda SET quantidade=${quantidade} WHERE idpedido=${id}`)
+res.send(`pedido de id numero ${id} foi alterado`)
+})
 
 app.post("/editarPrecoProduto", verifyJWT, function(req,res){
     const nomeproduto= req.body.nomeproduto
