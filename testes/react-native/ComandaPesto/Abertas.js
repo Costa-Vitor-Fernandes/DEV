@@ -9,7 +9,7 @@ import {
  TouchableOpacity,
  Button,
  TouchableWithoutFeedback,
- Keyboard, FlatList, Modal, Pressable, ProgressViewIOSComponent, Touchable
+ Keyboard, FlatList, Modal, Pressable, ProgressViewIOSComponent, Touchable, ScrollView
 } from 'react-native';
 import axios from 'axios';
  
@@ -27,6 +27,7 @@ export default function Abertas (props){
     const [novoProduto,setNovoProduto] = useState("")
     const [qntdAntesDaMudanca, setQntdAntesDaMudanca]= useState('')
     const [idOndeMudou, setIdOndeMudou] = useState([])
+    const [formaDePagamento,setFormaDePagamento] = useState('')
    
 
     //useEffect on getClientes()
@@ -162,7 +163,8 @@ if(idOndeMudou.length===1){
 // terminou de aplicar a mudanca fecha o modal
 setModalVisible(!modalVisible)  
 }
-const renderTotal = () =>{
+
+const renderTotalRS = () =>{
   if(id.length>1){
     let total = null
     for (let i in preco){
@@ -178,8 +180,27 @@ const renderTotal = () =>{
 const addPeloTextInput = () =>{
   // novoProduto, cliente q ta clicado e mandar um post 
   console.log(cliente, novoProduto)
-  // limpa novoProduto aqui
-  //fecha o modal ao fim?
+  
+  axios.post('http://192.168.0.17:3001/addToComanda', {
+    cliente: cliente,
+    nomeproduto:novoProduto,
+    quantidade:1
+})
+.then(function (response) {
+    // console.warn(response.data);
+  })
+  .catch(function (error) {
+    // console.error(error);
+});
+setTimeout(()=>{
+  getComandaCliente(cliente)
+  setNovoProduto('')
+},2000)
+
+}
+const pagar = () =>{
+  console.log('voce esta pagando' ,renderTotalRs(), 'com', formaDePagamento )
+  //axios update status to 1, forma de pagamento
 }
     
  const renderItem = ({ item, index }) => {
@@ -202,7 +223,7 @@ const addPeloTextInput = () =>{
          setModalVisible(!modalVisible)
          
        }}>
-         <View style={styles.centeredView}>
+          <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text style={styles.modalText}>Conta de {cliente}</Text>
               {/* add aqui as coisas da conta que puxar do cliente */}
@@ -216,22 +237,28 @@ const addPeloTextInput = () =>{
               <Text style={styles.linhaDaComandaHeader}>QNTD </Text>
               </View>
               {/* View do resultado \/ */}
-
+              <ScrollView style={{backgroundColor:'#ddd', width:Dimensions.get("window").width}}>
               <ListaResultadoComanda nome={nomeproduto} preco={preco} quantidade={quantidade} id={id} setQntd={setQntd} />
+              </ScrollView>
 
                {/* View do resultado /\ */}
 
 
               {/* botao de adicionar */}
-              <View style={{flex:1, flexDirection:'row', width:'100%', textAlign: 'center', }}>
+              <View style={{flex:1, flexDirection:'row', width:'100%', textAlign: 'center', height:10, }}>
               {/* <TextInput onChangeText={setNovoProduto} placeholder='adicionar um produto' value={novoProduto} style={{backgroundColor:"#eee", width:"100%", paddingLeft:10}}></TextInput> */}
-                <TextInput placeholder='adicione um produto' onChangeText={setNovoProduto} value={novoProduto} style={{backgroundColor:"#eee", width:"100%", paddingLeft:10}} />
-              <Button onPress={addPeloTextInput} title="+" />
+                <TextInput 
+                autoCapitalize={'none'} 
+                placeholder='adicione um produto' 
+                onChangeText={setNovoProduto} 
+                value={novoProduto} 
+                style={{backgroundColor:"#eee", width:"100%", paddingLeft:10,height:30}} />
+              <TouchableOpacity style={{backgroundColor: '#ccc', height:30, width:20, justifyContent:'center', alignItems:'center'}} onPress={addPeloTextInput}><Text>+</Text></TouchableOpacity>
               </View>
               {/* add aqui as coisas da conta que puxar do cliente */}
               
               
-              
+              <View style={{width:400, marginBottom:10,flexDirection:'row', justifyContent:'space-around'}}>
               <TouchableOpacity
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => {
@@ -245,13 +272,28 @@ const addPeloTextInput = () =>{
               >
                 <Text style={styles.textStyle}>voltar</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={aplicarMudanca}>
-                <Text>Aplicar Mudanças</Text>
+              <TouchableOpacity style={{elevation: 5,backgroundColor:"green", borderRadius:50, height:40, justifyContent:'center', padding:5}} 
+                                onPress={aplicarMudanca}>
+                <Text style={styles.textStyle}>Aplicar</Text>
               </TouchableOpacity>
-              
-              <TouchableOpacity><Text>Pagar</Text></TouchableOpacity>
-              <Text>Total R${renderTotal()}</Text>
+              <Text style={{fontWeight: "bold", textAlign: "center", alignSelf:'center'}}>Total R${renderTotalRS()}</Text>
+              </View>
+            <View style={{flexDirection:'row'}}>
+
+              <TextInput 
+                autoCapitalize={'none'} 
+                placeholder='adicione a forma de pagamento' 
+                onChangeText={setFormaDePagamento} 
+                value={formaDePagamento} 
+                style={{backgroundColor:"#eee", width:"80%", paddingLeft:10,height:30}} />
+              <TouchableOpacity 
+              style={{backgroundColor: 'green', height:30, width:70, justifyContent:'center', alignItems:'center'}} 
+              onPress={addPeloTextInput}>
+              <Text style={styles.textStyle}>PAGAR</Text>
+              </TouchableOpacity>
             </View>
+              
+          </View>
           </View>
       </Modal>
         <Pressable
@@ -347,7 +389,6 @@ const styles = StyleSheet.create({
       backgroundColor: "#F194FF",
     },
     buttonClose: {
-      marginTop:10,
       backgroundColor: "#2196F3",
     },
     textStyle: {
@@ -366,7 +407,7 @@ const styles = StyleSheet.create({
       backgroundColor:"#777"
     },
     linhaDaComandaHeader:{
-      width: Dimensions.get('window').width /5,
+      width: Dimensions.get('window').width /4,
       margin: 1,
       textAlign:'center',
       color:"white"
@@ -419,9 +460,9 @@ const minusButton=(i)=>{
         obj.push(<Text  style={styles.linhaDaComanda}>{props.id[i]}</Text>)
         obj.push(<Text  style={styles.linhaDaComanda}>{props.nome[i]}</Text>)
         obj.push(<Text  style={styles.linhaDaComanda}>{props.preco[i]}</Text>)
-        obj.push(<Button onPress={()=>minusButton(i)} title='-'></Button>)
+        obj.push(<TouchableOpacity onPress={()=>minusButton(i)}><Text>-</Text></TouchableOpacity>)
         obj.push(<Text  style={styles.linhaDaComanda}>{props.quantidade[i]}</Text>)
-        obj.push(<Button onPress={()=>plusButton(i)} title='+'></Button>)
+        obj.push(<TouchableOpacity onPress={()=>plusButton(i)}><Text>+</Text></TouchableOpacity>)
         linha.push(<View style={{flexDirection:'row', backgroundColor:'#056252'}}>{obj}</View>)
       }
       if(i%2 !== 0){
@@ -429,9 +470,9 @@ const minusButton=(i)=>{
         obj.push(<Text  style={styles.linhaDaComanda2}>{props.id[i]}</Text>)
         obj.push(<Text  style={styles.linhaDaComanda2}>{props.nome[i]}</Text>)
         obj.push(<Text  style={styles.linhaDaComanda2}>{props.preco[i]}</Text>)
-        obj.push(<Button onPress={()=>minusButton(i)} title='-'></Button>)
+        obj.push(<TouchableOpacity onPress={()=>minusButton(i)}><Text>-</Text></TouchableOpacity>)
         obj.push(<Text  style={styles.linhaDaComanda2}>{props.quantidade[i]}</Text>)
-        obj.push(<Button onPress={()=>plusButton(i)} title='+'></Button>)
+        obj.push(<TouchableOpacity onPress={()=>plusButton(i)}><Text>+</Text></TouchableOpacity>)
         linha.push(<View style={{flexDirection:'row', backgroundColor:'#ddd' }}>{obj}</View>)
       }
     }

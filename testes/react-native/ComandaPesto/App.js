@@ -23,7 +23,6 @@ function TabAbertas ({navigation}) {
   const [modalVisible,setModalVisible] = useState(false)
   const [refresh, setRefresh] = useState(false)
   const [produto,setProduto] = useState("")
-  const [preco, setPreco] = useState('')
   const [color,setColor]= useState("#24a0ed")
 
   
@@ -42,7 +41,7 @@ function TabAbertas ({navigation}) {
       },[navigation, refresh])
   
 
-const addCliente = () =>{
+const addClientePopUp = () =>{
   setModalVisible(!modalVisible) 
   setColor("#24a0ed")
   // axios.get produtos e precos da lista de produtos e setar um estado
@@ -51,14 +50,13 @@ const addCliente = () =>{
 const adicionarNovoCliente = () =>{
   setColor("green")
   
-  // passando preco estatico por enquanto
-  const preco = 5
+
+
   console.log('info do que da sendo adicionado', novoCliente, quantidade, produto)
   axios.post('http://192.168.0.17:3001/addToComanda', {
         cliente:novoCliente,
         quantidade:quantidade,
         nomeproduto:produto,
-        preco: preco,
         token: token
     })
     .then(function (response) {
@@ -234,7 +232,7 @@ const styles = StyleSheet.create({
           </View>
       </Modal>
 
-<TouchableOpacity style={styles.addButton} onPress={addCliente}>
+<TouchableOpacity style={styles.addButton} onPress={addClientePopUp}>
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
     </View>

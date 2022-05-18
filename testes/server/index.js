@@ -121,9 +121,15 @@ app.post("/addToComanda", function (req,res){
     const nomeproduto = req.body.nomeproduto
     const quantidade = req.body.quantidade
     const cliente = req.body.cliente
-    const preco = req.body.preco
 
-    db.query(`INSERT INTO new_schema.comanda (nomeproduto, quantidade, cliente, preco) VALUES ('${nomeproduto}','${quantidade}','${cliente}', '${preco}') `)
+
+    //NOVA QUERY
+//   INSERT INTO new_schema.comanda (nomeproduto, quantidade, cliente, preco) VALUES (`guarana`,1,`Vitor`, (SELECT preco FROM new_schema.products WHERE nomeproduto=`guarana`))
+
+// INSERT INTO new_schema.comanda (nomeproduto, quantidade, cliente, preco) VALUES ('guarana',1,'Vitor', (SELECT preco FROM new_schema.products WHERE nomeproduto='guarana'))
+
+
+    db.query(`INSERT INTO new_schema.comanda (nomeproduto, quantidade, cliente, preco) VALUES ('${nomeproduto}','${quantidade}','${cliente}', (SELECT preco FROM new_schema.products WHERE nomeproduto='${nomeproduto}'))`)
     res.send("checar se adicionou em get")
 })
 
@@ -300,3 +306,7 @@ const port = 3001
 app.listen(port, () =>{
     console.log('rodando servidor')
 })
+
+
+
+
