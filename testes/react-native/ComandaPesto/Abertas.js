@@ -4,12 +4,9 @@ import {
  Text,
  View,
  TextInput,
- Image,
  Dimensions,
  TouchableOpacity,
- Button,
- TouchableWithoutFeedback,
- Keyboard, FlatList, Modal, Pressable, ProgressViewIOSComponent, Touchable, ScrollView
+ FlatList, Modal, Pressable, ScrollView
 } from 'react-native';
 import axios from 'axios';
  

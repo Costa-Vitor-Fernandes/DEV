@@ -123,12 +123,6 @@ app.post("/addToComanda", function (req,res){
     const cliente = req.body.cliente
 
 
-    //NOVA QUERY
-//   INSERT INTO new_schema.comanda (nomeproduto, quantidade, cliente, preco) VALUES (`guarana`,1,`Vitor`, (SELECT preco FROM new_schema.products WHERE nomeproduto=`guarana`))
-
-// INSERT INTO new_schema.comanda (nomeproduto, quantidade, cliente, preco) VALUES ('guarana',1,'Vitor', (SELECT preco FROM new_schema.products WHERE nomeproduto='guarana'))
-
-
     db.query(`INSERT INTO new_schema.comanda (nomeproduto, quantidade, cliente, preco) VALUES ('${nomeproduto}','${quantidade}','${cliente}', (SELECT preco FROM new_schema.products WHERE nomeproduto='${nomeproduto}'))`)
     res.send("checar se adicionou em get")
 })
@@ -171,6 +165,17 @@ app.get("/allProducts", (req,res)=>{
 
 app.get("/todosClientesAbertos", (req,res)=>{
     db.query("SELECT * FROM new_schema.comanda WHERE status='0' ", function(err,result,fields){
+        // res.json cada cliente
+        const obj =  result.map(r=>r.cliente)
+        //separa por unico 
+        const cadaCliente = [...new Set(obj)]
+        console.log(cadaCliente)
+        res.json(cadaCliente)
+
+    })
+})
+app.get("/todosClientesFechados", (req,res)=>{
+    db.query("SELECT * FROM new_schema.comanda WHERE status='1' ", function(err,result,fields){
         // res.json cada cliente
         const obj =  result.map(r=>r.cliente)
         //separa por unico 
@@ -231,6 +236,32 @@ app.get("/comandaCliente", (req,res)=>{
             nomeproduto: result.map(r=>r.nomeproduto),
             quantidade: result.map(r=>r.quantidade),
             preco:result.map(r=>r.preco)
+        }
+        res.json(obj)
+        // retornar os ids dos pedidos com res send json 
+    })
+
+})
+app.get("/comandaFechadaCliente", (req,res)=>{
+    const cliente = req.query.cliente
+    // req.query.cliente pro axios...
+    console.log(cliente)
+
+    
+    // talvez eu deva implementar aqui o status = 0 pra nao pagas e fazer
+    // outra rota so pra pagos
+    db.query(`SELECT * FROM new_schema.comanda WHERE cliente="${cliente}" AND status=1 `, function (err,result,fields){
+        console.log(result.map(r=>r.idpedido))
+        console.log(result.map(r=>r.nomeproduto))
+        console.log(result.map(r=>r.preco))
+        console.log(result.map(r=>r.quantidade))
+        const pagamento = [...new Set(result.map(r=>r.pagamento))]
+        const obj ={
+            id: result.map(r=>r.idpedido),
+            nomeproduto: result.map(r=>r.nomeproduto),
+            quantidade: result.map(r=>r.quantidade),
+            preco:result.map(r=>r.preco),
+            pagamento:pagamento
         }
         res.json(obj)
         // retornar os ids dos pedidos com res send json 
