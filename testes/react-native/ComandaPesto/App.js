@@ -48,29 +48,37 @@ const addClientePopUp = () =>{
   // esse estado vai pra Lista que vai renderizar no lugar do textinput de listinha de produto
 }
 const adicionarNovoCliente = () =>{
-  setColor("green")
+
+
+    axios.post('http://192.168.0.17:3001/addToComanda', {
+      cliente:novoCliente,
+      quantidade:quantidade,
+      nomeproduto:produto,
+      token: token
+  })
+  .then(function (response) {
+      if (response.data.auth){
+          token = response.data.token
+          navigation.navigate("Home")
+          // redirect to main page / home page whatever
+      }
+      // console.warn(response.data.token);
+    })
+    .catch(function (error) {
+    alert("Login inválido")
+      // console.error(error);
+});
+
   
 
 
   console.log('info do que da sendo adicionado', novoCliente, quantidade, produto)
-  axios.post('http://192.168.0.17:3001/addToComanda', {
-        cliente:novoCliente,
-        quantidade:quantidade,
-        nomeproduto:produto,
-        token: token
-    })
-    .then(function (response) {
-        if (response.data.auth){
-            token = response.data.token
-            navigation.navigate("Home")
-            // redirect to main page / home page whatever
-        }
-        // console.warn(response.data.token);
-      })
-      .catch(function (error) {
-      alert("Login inválido")
-        // console.error(error);
-  });
+  
+  setModalVisible(!modalVisible)
+  setRefresh(true)
+  setTimeout(()=>{
+    setRefresh(false)
+  },100)
 }
 const styles = StyleSheet.create({
   container: {

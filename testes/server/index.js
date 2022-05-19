@@ -133,11 +133,12 @@ app.post("/addToComanda", function (req,res){
     res.send("checar se adicionou em get")
 })
 
-app.post("/encerrarComanda", verifyJWT, function (req,res){
+app.post("/encerrarComanda", function (req,res){
    const cliente = req.body.cliente
    const pagamento =  req.body.pagamento 
+   const id = req.body.id
 
-   db.query(`UPDATE new_schema.comanda SET status="1", pagamento="${pagamento}" WHERE cliente="${cliente}"`)
+   db.query(`UPDATE new_schema.comanda SET status="1", pagamento="${pagamento}" WHERE idpedido=${id}`)
    res.send(`comanda do cliente ${cliente} foi paga com ${pagamento}`)
 
 })

@@ -83,9 +83,8 @@ const options = {
              <TextInput
                style={styles.input}
                autoCapitalize={'none'}
-               keyboardType='email-address'
-               textContentType='emailAddress'
                onChangeText={setUser}
+               value={user}
              />
            </View>
            <View style={styles.inputBox}>
@@ -96,6 +95,7 @@ const options = {
                secureTextEntry={true}
                textContentType='password'
                onChangeText={setPassword}
+               value={password}
              />
            </View>
            <TouchableOpacity style={styles.loginButton} onPress={loginButton}>
