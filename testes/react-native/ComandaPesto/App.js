@@ -48,7 +48,7 @@ const addClientePopUp = () =>{
   // esse estado vai pra Lista que vai renderizar no lugar do textinput de listinha de produto
 }
 const adicionarNovoCliente = () =>{
-
+  setColor("green")
 
     axios.post('http://192.168.0.17:3001/addToComanda', {
       cliente:novoCliente,
@@ -74,9 +74,9 @@ const adicionarNovoCliente = () =>{
 
   console.log('info do que da sendo adicionado', novoCliente, quantidade, produto)
   
-  setModalVisible(!modalVisible)
-  setRefresh(true)
   setTimeout(()=>{
+    setRefresh(true)
+    setModalVisible(!modalVisible)
     setRefresh(false)
   },100)
 }
