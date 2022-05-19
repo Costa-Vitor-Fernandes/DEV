@@ -290,7 +290,7 @@ const headerWidthSize = Dimensions.get('window').width*0.755
                 placeholder='adicione um produto' 
                 onChangeText={setNovoProduto} 
                 value={novoProduto} 
-                style={{backgroundColor:"#eee",alignContent:'center', width:Dimensions.get('screen').width*0.95, paddingLeft:10,height:30}} />
+                style={{backgroundColor:"#eee",alignContent:'center', width:Dimensions.get('screen').width*0.70, paddingLeft:10,height:30}} />
               <TouchableOpacity style={{backgroundColor: colorButtonTextInput, height:30, width:Dimensions.get('screen').width*0.05, justifyContent:'center', alignItems:'center'}} onPress={addPeloTextInput}><Text>+</Text></TouchableOpacity>
               </View>
               {/* add aqui as coisas da conta que puxar do cliente */}
@@ -302,9 +302,9 @@ const headerWidthSize = Dimensions.get('window').width*0.755
                   placeholder='adicione a forma de pagamento' 
                   onChangeText={setFormaDePagamento} 
                   value={formaDePagamento} 
-                  style={{backgroundColor:"#eee", width:"80%", paddingLeft:10,height:30}} />
+                  style={{backgroundColor:"#eee", width:Dimensions.get('screen').width*0.5, paddingLeft:10,height:30}} />
                 <TouchableOpacity 
-                  style={{backgroundColor: color, height:30, width:Dimensions.get('window').width*0.2, justifyContent:'center', alignItems:'center', marginLeft:13}} 
+                  style={{backgroundColor: color, height:30, width:Dimensions.get('window').width*0.22, justifyContent:'center', alignItems:'center', marginLeft:13}} 
                   onPress={pagarAConta}>
                   <Text style={styles.textStyle}>PAGAR</Text>
                 </TouchableOpacity>
@@ -511,22 +511,23 @@ const styles = StyleSheet.create({
     },
 
     plusAndMinusButtons:{
-      backgroundColor:'green',
+      backgroundColor:'#bbb',
       justifyContent:'center',
       alignItems:'center',
       alignSelf:'center',
       width:Dimensions.get('window').width*0.05,
       height: Dimensions.get('window').height/35,
       borderWidth:0.5,
+      elevation: 5,
     },
     quantidade:{
-      width:Dimensions.get('window').width*0.1,
+      width:Dimensions.get('window').width*0.06,
       textAlign:'center',
       margin:1
   },
 
   preco:{
-    width: Dimensions.get('window').width*0.18,
+    width: Dimensions.get('window').width*0.17,
     margin: 1,
     textAlign:'center'
   },
@@ -571,7 +572,7 @@ const minusButton=(i)=>{
         obj.push(<TouchableOpacity style={styles.plusAndMinusButtons} onPress={()=>minusButton(i)}><Text>-</Text></TouchableOpacity>)
         obj.push(<Text  style={styles.quantidade}>{props.quantidade[i]}</Text>)
         obj.push(<TouchableOpacity style={styles.plusAndMinusButtons} onPress={()=>plusButton(i)}><Text>+</Text></TouchableOpacity>)
-        linha.push(<View style={{flexDirection:'row', backgroundColor:'#056252'}}>{obj}</View>)
+        linha.push(<View style={{flexDirection:'row', backgroundColor:'#5c998a'}}>{obj}</View>)
       }
       if(i%2 !== 0){
         const obj = []
@@ -588,7 +589,7 @@ const minusButton=(i)=>{
     return <View style={{flexDirection:'column'}}>{linha}</View>
   }
 return(
-  <View style={{backgroundColor:'#056252', flexDirection:'row', textAlign:"center"}}>
+  <View style={{backgroundColor:'#5c998a', flexDirection:'row', textAlign:"center"}}>
   <Text style={styles.linhaDaComandaId}>{props.id} </Text>
   <Text style={styles.linhaDaComandaNome}>{props.nome} </Text>
   <Text style={styles.preco}>{props.preco} </Text>
