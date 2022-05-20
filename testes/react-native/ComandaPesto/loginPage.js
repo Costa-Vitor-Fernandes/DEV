@@ -66,7 +66,10 @@ const options = {
  
  
    return (
-   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+   <TouchableWithoutFeedback 
+  //  onPress={() => Keyboard.dismiss()}
+  // i think this is triggering the bug in web
+   >
      <View style={styles.container}>
        <View style={styles.bigCircle}></View>
        <View style={styles.smallCircle}></View>
@@ -80,13 +83,18 @@ const options = {
            <View style={styles.hr}></View>
            <View style={styles.inputBox}>
              <Text style={styles.inputLabel}>Usuário</Text>
+ 
+             
+
+
              <TextInput
                style={styles.input}
                autoCapitalize={'none'}
-               keyboardType='email-address'
-               textContentType='emailAddress'
                onChangeText={setUser}
-             />
+               value={user}
+               />
+               
+            
            </View>
            <View style={styles.inputBox}>
              <Text style={styles.inputLabel}>Senha</Text>
@@ -96,6 +104,7 @@ const options = {
                secureTextEntry={true}
                textContentType='password'
                onChangeText={setPassword}
+               value={password}
              />
            </View>
            <TouchableOpacity style={styles.loginButton} onPress={loginButton}>

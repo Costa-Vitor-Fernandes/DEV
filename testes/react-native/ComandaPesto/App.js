@@ -8,29 +8,232 @@ import { useEffect, useLayoutEffect, useState } from 'react';
 import axios from 'axios';
 import Configuracao from './Configuracao';
 import Abertas from './Abertas';
+import Fechadas from './Fechadas';
 
 const DeviceWidth =  Dimensions.get('window').width
+
+const numColumns = 3
 
 const token = ''
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+function TabFechadas({navigation}){
+  const [refresh, setRefresh] = useState(false)
+  useLayoutEffect(()=>{
+    navigation.setOptions({
+      headerRight: ()=> (<View
+         style={{marginRight:Dimensions.get('window').width*0.05}}
+          >
+            <Button onPress={()=>setRefresh(!refresh)} title="Atualizar" />
+          </View>)
+    })
+    setTimeout(()=>{
+      setRefresh(false)
+    
+    },1000) // checar esse tempo de porta dps
+  },[navigation, refresh])
+
+
+  const styles = StyleSheet.create({
+    container: {
+      width: Dimensions.get("window").width ,
+      height: Dimensions.get("window").height, 
+      flex: 1,
+      backgroundColor: '#fff',
+      justifyContent: 'center',
+    },
+    flatListContainer: {
+      flex: 1,
+      marginTop: 5,
+      marginHorizontal:5,
+      
+    },
+    item: {
+      backgroundColor: '#4B7C6F',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flex: 1,
+      margin: 2,
+      height: Dimensions.get('window').width/numColumns,
+      borderRadius:20, 
+    },
+    itemInvisible: {
+      backgroundColor: 'transparent',
+    },
+    itemText: {
+      color: '#fff',
+    },
+    viewdaflatlist:{
+      height: Dimensions.get('window').width/numColumns,
+      width: Dimensions.get('window').width/3 - 5,
+      
+      
+    },
+    modalContainer:{
+      height: Dimensions.get('window').height-300,
+      backgroundColor: '#999',
+  
+    },
+    /*
+    exemplo
+    */
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22,
+      
+    },
+    modalView: {
+      width:Dimensions.get('screen').width*0.8,
+      height:Dimensions.get('screen').height*0.78,
+      margin: 20,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      alignItems: "center",
+      shadowColor: "#555",
+      shadowOffset: {
+        width: 0,
+        height: 1
+      },
+      shadowOpacity: 0.45,
+      shadowRadius: 2,
+      elevation: 5
+    },
+    button: {
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2
+    },
+    buttonOpen: {
+      backgroundColor: "#F194FF",
+    },
+    buttonClose: {
+      backgroundColor: "#2196F3",
+    },
+    textStyle: {
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center"
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: "center"
+    },
+    viewAntesDoModal:{
+      backgroundColor: "#999",
+    },
+    idList:{
+      backgroundColor:"#777"
+    },
+    linhaDaComandaHeaderId:{
+      width: Dimensions.get('window').width*0.09,
+      margin: 1,
+      textAlign:'center',
+      color:"white"
+    },
+    linhaDaComandaHeaderNome:{
+      width: Dimensions.get('window').width*0.28,
+      margin: 1,
+      textAlign:'center',
+      color:"white"
+    },
+    headerPreco:{
+      width: Dimensions.get('window').width*0.18,
+      margin: 1,
+      textAlign:'center',
+      color:"white",
+    },
+    linhaDaComandaHeader:{
+      width: Dimensions.get('window').width*0.2,
+      margin: 1,
+      textAlign:'center',
+      color:"white"
+    },
+    linhaDaComanda:{
+      width: Dimensions.get('window').width*0.2-10,
+      height: Dimensions.get('window').height/30,
+      margin: 1,
+      textAlign:'center'
+    },
+    linhaDaComanda2:{
+      width: Dimensions.get('window').width*0.8/4-10,
+      height: Dimensions.get('window').height/30,
+      margin: 1,
+      textAlign:'center'
+    },
+    linhaDaComandaId:{
+
+      width: Dimensions.get('window').width*0.09,
+      height: Dimensions.get('window').height/30,
+      margin: 1,
+      textAlign:'center'
+    },
+    linhaDaComanda2Id:{
+      width: Dimensions.get('window').width*0.09,
+      height: Dimensions.get('window').height/30,
+      margin: 1,
+      textAlign:'center'
+    },
+    linhaDaComandaNome:{
+      width: Dimensions.get('window').width*0.28 ,
+      margin: 1,
+      textAlign:'center',
+    },
+    linhaDaComanda2Nome:{
+      width: Dimensions.get('window').width*0.28  ,
+      margin: 1,
+      textAlign:'center',
+    },
+
+    plusAndMinusButtons:{
+      backgroundColor:'green',
+      justifyContent:'center',
+      alignItems:'center',
+      alignSelf:'center',
+      width:Dimensions.get('window').width*0.05,
+      height: Dimensions.get('window').height/35,
+      borderWidth:0.5,
+    },
+    quantidade:{
+      width:Dimensions.get('window').width*0.1,
+      textAlign:'center',
+      margin:1
+  },
+
+  preco:{
+    width: Dimensions.get('window').width*0.18,
+    margin: 1,
+    textAlign:'center'
+  },
+
+  
+  });
+
+  return(
+    <View style={styles.container}>
+<Fechadas refresh={refresh} />
+</View>)
+
+}
+
 
 
 function TabAbertas ({navigation}) {
-  const [quantidade,setQuantidade]= useState("")
   const [novoCliente, setNovoCliente] = useState("")
+  const [produto,setProduto] = useState("")
+  const [quantidade,setQuantidade]= useState("")
   const [modalVisible,setModalVisible] = useState(false)
   const [refresh, setRefresh] = useState(false)
-  const [produto,setProduto] = useState("")
-  const [preco, setPreco] = useState('')
   const [color,setColor]= useState("#24a0ed")
 
   
       useLayoutEffect(()=>{
         navigation.setOptions({
           headerRight: ()=> (<View
-             style={styles.botaoheader}
+             style={{marginRight:Dimensions.get('window').width*0.05}}
               >
                 <Button onPress={()=>setRefresh(!refresh)} title="Atualizar" />
               </View>)
@@ -42,7 +245,7 @@ function TabAbertas ({navigation}) {
       },[navigation, refresh])
   
 
-const addCliente = () =>{
+const addClientePopUp = () =>{
   setModalVisible(!modalVisible) 
   setColor("#24a0ed")
   // axios.get produtos e precos da lista de produtos e setar um estado
@@ -50,29 +253,36 @@ const addCliente = () =>{
 }
 const adicionarNovoCliente = () =>{
   setColor("green")
-  
-  // passando preco estatico por enquanto
-  const preco = 5
-  console.log('info do que da sendo adicionado', novoCliente, quantidade, produto)
-  axios.post('http://192.168.0.17:3001/addToComanda', {
-        cliente:novoCliente,
-        quantidade:quantidade,
-        nomeproduto:produto,
-        preco: preco,
-        token: token
+
+    axios.post('http://192.168.0.17:3001/addToComanda', {
+      cliente:novoCliente,
+      quantidade:quantidade,
+      nomeproduto:produto,
+      token: token
+  })
+  .then(function (response) {
+      if (response.data.auth){
+          token = response.data.token
+          navigation.navigate("Home")
+          // redirect to main page / home page whatever
+      }
+      // console.warn(response.data.token);
     })
-    .then(function (response) {
-        if (response.data.auth){
-            token = response.data.token
-            navigation.navigate("Home")
-            // redirect to main page / home page whatever
-        }
-        // console.warn(response.data.token);
-      })
-      .catch(function (error) {
-      alert("Login inválido")
-        // console.error(error);
-  });
+    .catch(function (error) {
+    alert("Login inválido")
+      // console.error(error);
+});
+
+  
+
+
+  console.log('info do que da sendo adicionado', novoCliente, quantidade, produto)
+  
+  setTimeout(()=>{
+    setRefresh(true)
+    setModalVisible(!modalVisible)
+    setRefresh(false)
+  },100)
 }
 const styles = StyleSheet.create({
   container: {
@@ -234,7 +444,7 @@ const styles = StyleSheet.create({
           </View>
       </Modal>
 
-<TouchableOpacity style={styles.addButton} onPress={addCliente}>
+<TouchableOpacity style={styles.addButton} onPress={addClientePopUp}>
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
     </View>
@@ -246,6 +456,8 @@ function Home() {
   return (
     <Tab.Navigator>
       <Tab.Screen name="Abertas" component={TabAbertas}
+      />
+      <Tab.Screen name="Fechadas" component={TabFechadas}
       />
       <Tab.Screen name="Configurações" component={Configuracao}  />
     </Tab.Navigator>
