@@ -10,8 +10,8 @@ import Configuracao from './Configuracao';
 import Abertas from './Abertas';
 import Fechadas from './Fechadas';
 
+const ip = '192.168.0.101'
 const DeviceWidth =  Dimensions.get('window').width
-
 const numColumns = 3
 
 const token = ''
@@ -254,7 +254,7 @@ const addClientePopUp = () =>{
 const adicionarNovoCliente = () =>{
   setColor("green")
 
-    axios.post('http://192.168.0.17:3001/addToComanda', {
+    axios.post(`http://${ip}:3001/addToComanda`, {
       cliente:novoCliente,
       quantidade:quantidade,
       nomeproduto:produto,

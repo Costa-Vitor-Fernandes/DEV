@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
  
- 
+ const ip = '192.168.0.101'
  
 export default function LoginScreen({navigation}) {
  
@@ -45,7 +45,7 @@ const options = {
 
 
 // as vezes o ip muda
-    axios.post('http://192.168.0.17:3001/login', {
+    axios.post(`http://${ip}:3001/login`, {
         username:user,
         password:password
     })
