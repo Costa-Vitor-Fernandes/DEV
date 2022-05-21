@@ -83,6 +83,9 @@ setDeleteProdutotModal(del)
           <TouchableOpacity style={styles.basicButton} onPress={()=>setExportModal(true)}>
           <Text style={styles.textButton}>Encerrar Aba Fechadas(Exportar p/ Excel)"</Text>
           </TouchableOpacity>
+          <TouchableOpacity style={styles.basicButton} >
+          <Text style={styles.textButton}>Lista Todos os Produtos</Text>
+          </TouchableOpacity>
 
           {/* MODAL */}
           {addProdutosModal? <AddProductModal state={addProdutosModal} setState={addProdutos} /> : null}
