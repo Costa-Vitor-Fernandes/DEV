@@ -100,9 +100,9 @@ app.post('/login', async (req, res)=>{
 
 
 //cadastro de produtos
-app.post('/addProduct', verifyJWT, (req, res)=>{
+app.post('/addProduct', (req, res)=>{
     try{
-        const nome = req.body.nome
+        const nome = req.body.nomeproduto
         const preco = req.body.preco
         // console.log(username, nome, preco)
         // console.log(`${username}pode adicionar o produto${nome}`);
@@ -158,7 +158,12 @@ app.get("/allProducts", (req,res)=>{
     db.query("SELECT * FROM new_schema.products", function (err,result,fields){
     console.log(result.map(r=>r.nomeproduto))
     console.log(result.map(r=>r.preco))
-    //res send both maps    
+    const obj ={
+        nomeproduto: result.map(r=>r.nomeproduto),
+        preco : result.map(r=>r.preco)
+    }
+    
+    res.json(obj) 
     })
 })
 

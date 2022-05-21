@@ -108,13 +108,54 @@ setDeleteProdutotModal(del)
 function AddProductModal (props) {
 
     const [aplicarColor,setAplicarColor]=useState("#ddd")
-    const [produto, setProduto] =useState('')
+    const [todosProdutos, setTodosProdutos] =useState('')
+    const [novoProduto, setNovoProduto] = useState("")
     const [preco, setPreco] = useState('')
+
+    useEffect(()=>{
+      getProdutos()
+    },[])
+
+    const getProdutos =() =>{
+      axios.get(`http://${ip}:3001/allProducts`, {
+      }).then((res) => {
+        const obj = []
+          const arrAllProducts = res.data.nomeproduto
+          arrAllProducts.forEach((e, i, arr)=>{
+            obj.push(arr[i])
+          })
+  setTodosProdutos(obj)
+});
+    }
+
+    const aplicarAdicaoDeProd = () =>{
+      if (!todosProdutos.includes(novoProduto)){
+        addNovoProdutoAoBanco()
+      }else alert('ERRO : talvez já exista')
+    }
+
+    const addNovoProdutoAoBanco =() =>{
+      console.log(novoProduto, preco, "novo Produto e preco")
+      axios.post(`http://${ip}:3001/addProduct`, {
+        nomeproduto:novoProduto,
+        preco:preco
+      }).then(function (response) {
+        alert(`Produto ${novoProduto} foi adicionado com preco ${preco} `)
+        setPreco("")
+        setNovoProduto("")
+      })
+      .catch(function (error) {
+      alert("Login inválido")
+        // console.error(error);
+  });
+
+    }
+
 
     const styles = StyleSheet.create({
     centeredView: {
       flex: 1,
-      backgroundColor:'green',
+      backgroundColor:'#fff',
       justifyContent: "center",
       alignItems: "center",
       marginTop: Dimensions.get('window').height*0.5,
@@ -125,7 +166,7 @@ function AddProductModal (props) {
       width:Dimensions.get('screen').width*0.8,
       height:Dimensions.get('screen').height*0.77,
       marginTop:Dimensions.get('screen').height*0.05,
-      backgroundColor: "green",
+      backgroundColor: "#fff",
       borderRadius: 20,
       padding: 35,
       alignItems: "center",
@@ -149,6 +190,10 @@ function AddProductModal (props) {
       color:'#fff'
     }
   })
+
+
+ 
+
 const fechar = () =>{
   props.setState(!props.state)
 }
@@ -170,8 +215,8 @@ const fechar = () =>{
 
        <TextInput  autoCapitalize={'none'} 
                   placeholder='adicione um produto' 
-                  onChangeText={setProduto} 
-                  value={produto} 
+                  onChangeText={setNovoProduto} 
+                  value={novoProduto} 
                   style={{backgroundColor:"#eee", width:"80%", paddingLeft:10,height:30, marginRight:10,}}/>
        <TextInput autoCapitalize={'none'} 
                   placeholder='preco' 
@@ -192,7 +237,7 @@ const fechar = () =>{
          </TouchableOpacity>
          <TouchableOpacity
            style={styles.aplicar}
-           onPress={fechar
+           onPress={aplicarAdicaoDeProd
           }
           >
            <Text style={styles.textStyle}>Aplicar</Text>
@@ -215,7 +260,7 @@ function AlterPrecoModal (props) {
   const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    backgroundColor:'green',
+    backgroundColor:'#fff',
     justifyContent: "center",
     alignItems: "center",
     marginTop: Dimensions.get('window').height*0.5,
@@ -226,7 +271,7 @@ function AlterPrecoModal (props) {
     width:Dimensions.get('screen').width*0.8,
     height:Dimensions.get('screen').height*0.77,
     marginTop:Dimensions.get('screen').height*0.05,
-    backgroundColor: "green",
+    backgroundColor: "#fff",
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
@@ -318,7 +363,7 @@ function DeleteModal (props) {
   const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    backgroundColor:'green',
+    backgroundColor:'#fff',
     justifyContent: "center",
     alignItems: "center",
     marginTop: Dimensions.get('window').height*0.5,
@@ -329,7 +374,7 @@ function DeleteModal (props) {
     width:Dimensions.get('screen').width*0.8,
     height:Dimensions.get('screen').height*0.77,
     marginTop:Dimensions.get('screen').height*0.05,
-    backgroundColor: "green",
+    backgroundColor: "#fff",
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
@@ -418,7 +463,7 @@ function NovoLoginModal (props) {
   const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    backgroundColor:'green',
+    backgroundColor:'#fff',
     justifyContent: "center",
     alignItems: "center",
     marginTop: Dimensions.get('window').height*0.5,
@@ -429,7 +474,7 @@ function NovoLoginModal (props) {
     width:Dimensions.get('screen').width*0.8,
     height:Dimensions.get('screen').height*0.77,
     marginTop:Dimensions.get('screen').height*0.05,
-    backgroundColor: "green",
+    backgroundColor: "#fff",
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
@@ -695,7 +740,7 @@ function TodosPedidosModal (props) {
     },
 
     plusAndMinusButtons:{
-      backgroundColor:'green',
+      backgroundColor:'#fff',
       justifyContent:'center',
       alignItems:'center',
       alignSelf:'center',
@@ -850,7 +895,7 @@ function ExportModal (props) {
   const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    backgroundColor:'green',
+    backgroundColor:'#fff',
     justifyContent: "center",
     alignItems: "center",
     marginTop: Dimensions.get('window').height*0.5,
@@ -861,7 +906,7 @@ function ExportModal (props) {
     width:Dimensions.get('screen').width*0.8,
     height:Dimensions.get('screen').height*0.77,
     marginTop:Dimensions.get('screen').height*0.05,
-    backgroundColor: "green",
+    backgroundColor: "#fff",
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
