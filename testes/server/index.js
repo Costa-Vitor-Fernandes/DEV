@@ -269,6 +269,20 @@ app.get("/comandaFechadaCliente", (req,res)=>{
 
 })
 
+app.get("/todosPedidosPorId", (req,res)=>{
+
+    db.query(`SELECT * FROM new_schema.comanda`, (err,result, fields)=>{
+        const obj ={
+            id: result.map(r=>r.idpedido),
+            nomeproduto: result.map(r=>r.nomeproduto),
+            quantidade: result.map(r=>r.quantidade),
+            preco:result.map(r=>r.preco),
+            status:result.map(r=>r.status)
+        }
+        res.json(obj)
+    })
+})
+
 
 //===========================================================================================================================
 // DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE 
