@@ -57,11 +57,12 @@ try{
         if(!allUsers.includes(username) || !allEmails.includes(email)){
             const hashedPassword = await bcrypt.hash(password, 10);
             console.log(`creates user ${username}`)
-            res.send('deu bom')
-            const insert = db.query(`INSERT INTO new_schema.users (username, email, password) VALUES ('${username}', '${email}', '${hashedPassword}')`)
-            return insert
+            db.query(`INSERT INTO new_schema.users (username, email, password) VALUES ('${username}', '${email}', '${hashedPassword}')`)
+            res.end('deu bom')
+            return 
         }
-    })
+    })  
+    
   }   
     catch{
         res.status(500).send('deu ruim')
