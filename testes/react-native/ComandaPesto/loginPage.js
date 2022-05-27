@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
  
- const ip = '192.168.0.101'
+ const ip = '192.168.0.17'
  
 export default function LoginScreen({navigation}) {
  

@@ -12,7 +12,7 @@ import axios from 'axios';
 
 const numColumns = 3;
 const token = ''
-const ip = '192.168.0.101'
+const ip = '192.168.0.17'
 
 export default function Abertas (props){
     const [eachCliente,setEachCliente] = useState("")

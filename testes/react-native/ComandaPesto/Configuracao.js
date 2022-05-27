@@ -3,7 +3,7 @@ import { useState,useEffect } from 'react'
 import { BottomTabBar } from '@react-navigation/bottom-tabs'
 import axios from 'axios'
 
-const ip ='192.168.0.101'
+const ip ='192.168.0.17'
 const numColumns=3
 const headerWidthSize = Dimensions.get('window').width*0.755
 

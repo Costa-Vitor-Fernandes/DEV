@@ -11,7 +11,7 @@ import {
 import axios from 'axios';
 
 const numColumns = 3
-const ip = '192.168.0.101'
+const ip = '192.168.0.17'
 const styles = StyleSheet.create({
     flatListContainer: {
       flex: 1,

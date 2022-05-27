@@ -41,7 +41,7 @@ function verifyJWT(req, res, next){
 // POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST 
 
 //registering
-app.post('/create', async (req,res)=>{
+app.post('/create', verifyJWT, async (req,res)=>{
     
     const password =  req.body.password
     const username = req.body.username
@@ -100,7 +100,7 @@ app.post('/login', async (req, res)=>{
 
 
 //cadastro de produtos
-app.post('/addProduct', (req, res)=>{
+app.post('/addProduct', verifyJWT, (req, res)=>{
     try{
         const nome = req.body.nomeproduto
         const preco = req.body.preco
@@ -117,7 +117,7 @@ app.post('/addProduct', (req, res)=>{
 })
 
 // add a order
-app.post("/addToComanda", function (req,res){
+app.post("/addToComanda", verifyJWT, function (req,res){
     const nomeproduto = req.body.nomeproduto
     const quantidade = req.body.quantidade
     const cliente = req.body.cliente
@@ -127,7 +127,7 @@ app.post("/addToComanda", function (req,res){
     res.send("checar se adicionou em get")
 })
 
-app.post("/encerrarComanda", function (req,res){
+app.post("/encerrarComanda",verifyJWT, function (req,res){
    const cliente = req.body.cliente
    const pagamento =  req.body.pagamento 
    const id = req.body.id
@@ -136,7 +136,7 @@ app.post("/encerrarComanda", function (req,res){
    res.send(`comanda do cliente ${cliente} foi paga com ${pagamento}`)
 
 })
-app.post('/updateQuantidade', function(req,res){
+app.post('/updateQuantidade',verifyJWT, function(req,res){
     const quantidade = req.body.quantidade
     const id = req.body.id
 
@@ -296,6 +296,7 @@ app.get("/todosPedidosPorId", (req,res)=>{
 //delete cadastro de produto
 app.delete("/deleteProduct", verifyJWT, (req,res) =>{
 //db query delete product where req.body.product
+
 const produto =  req.body.nomeproduto
 db.query(`DELETE FROM new_schema.products WHERE nomeproduto='${produto}'`)
 res.send("checa produtos se deu certo")
