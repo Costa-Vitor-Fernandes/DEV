@@ -5,6 +5,7 @@ const mysql = require("mysql2")
 const cors = require('cors')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const xl =  require('excel4node')
 
 app.use(cors());
 app.use(express.json());
@@ -41,7 +42,7 @@ function verifyJWT(req, res, next){
 // POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST POST 
 
 //registering
-app.post('/create', async (req,res)=>{
+app.post('/create', verifyJWT, async (req,res)=>{
     
     const password =  req.body.password
     const username = req.body.username
@@ -57,11 +58,12 @@ try{
         if(!allUsers.includes(username) || !allEmails.includes(email)){
             const hashedPassword = await bcrypt.hash(password, 10);
             console.log(`creates user ${username}`)
-            res.send('deu bom')
-            const insert = db.query(`INSERT INTO new_schema.users (username, email, password) VALUES ('${username}', '${email}', '${hashedPassword}')`)
-            return insert
+            db.query(`INSERT INTO new_schema.users (username, email, password) VALUES ('${username}', '${email}', '${hashedPassword}')`)
+            res.end('deu bom')
+            return 
         }
-    })
+    })  
+    
   }   
     catch{
         res.status(500).send('deu ruim')
@@ -102,7 +104,7 @@ app.post('/login', async (req, res)=>{
 //cadastro de produtos
 app.post('/addProduct', verifyJWT, (req, res)=>{
     try{
-        const nome = req.body.nome
+        const nome = req.body.nomeproduto
         const preco = req.body.preco
         // console.log(username, nome, preco)
         // console.log(`${username}pode adicionar o produto${nome}`);
@@ -117,7 +119,7 @@ app.post('/addProduct', verifyJWT, (req, res)=>{
 })
 
 // add a order
-app.post("/addToComanda", function (req,res){
+app.post("/addToComanda", verifyJWT, function (req,res){
     const nomeproduto = req.body.nomeproduto
     const quantidade = req.body.quantidade
     const cliente = req.body.cliente
@@ -127,7 +129,7 @@ app.post("/addToComanda", function (req,res){
     res.send("checar se adicionou em get")
 })
 
-app.post("/encerrarComanda", function (req,res){
+app.post("/encerrarComanda",verifyJWT, function (req,res){
    const cliente = req.body.cliente
    const pagamento =  req.body.pagamento 
    const id = req.body.id
@@ -136,7 +138,7 @@ app.post("/encerrarComanda", function (req,res){
    res.send(`comanda do cliente ${cliente} foi paga com ${pagamento}`)
 
 })
-app.post('/updateQuantidade', function(req,res){
+app.post('/updateQuantidade',verifyJWT, function(req,res){
     const quantidade = req.body.quantidade
     const id = req.body.id
 
@@ -158,7 +160,12 @@ app.get("/allProducts", (req,res)=>{
     db.query("SELECT * FROM new_schema.products", function (err,result,fields){
     console.log(result.map(r=>r.nomeproduto))
     console.log(result.map(r=>r.preco))
-    //res send both maps    
+    const obj ={
+        nomeproduto: result.map(r=>r.nomeproduto),
+        preco : result.map(r=>r.preco)
+    }
+    
+    res.json(obj) 
     })
 })
 
@@ -269,6 +276,20 @@ app.get("/comandaFechadaCliente", (req,res)=>{
 
 })
 
+app.get("/todosPedidosPorId", (req,res)=>{
+
+    db.query(`SELECT * FROM new_schema.comanda`, (err,result, fields)=>{
+        const obj ={
+            id: result.map(r=>r.idpedido),
+            nomeproduto: result.map(r=>r.nomeproduto),
+            quantidade: result.map(r=>r.quantidade),
+            preco:result.map(r=>r.preco),
+            status:result.map(r=>r.status)
+        }
+        res.json(obj)
+    })
+})
+
 
 //===========================================================================================================================
 // DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE 
@@ -277,6 +298,7 @@ app.get("/comandaFechadaCliente", (req,res)=>{
 //delete cadastro de produto
 app.delete("/deleteProduct", verifyJWT, (req,res) =>{
 //db query delete product where req.body.product
+
 const produto =  req.body.nomeproduto
 db.query(`DELETE FROM new_schema.products WHERE nomeproduto='${produto}'`)
 res.send("checa produtos se deu certo")
@@ -294,11 +316,86 @@ app.delete("/deletePedido", verifyJWT, (req,res)=>{
 app.delete('/comandaFechada', verifyJWT, (req,res)=>{
     const cliente = req.body.cliente
     db.query(`DELETE FROM new_schema.comanda WHERE cliente="${cliente}"`)
+   
+})
+
+app.delete('/DeleteTodasComandasFechadas', verifyJWT, (req,res)=>{
+    db.query(`DELETE FROM new_schema.comanda WHERE status='1'`)
 })
 
 
 //===========================================================================================================================
 //  TESTING SECTION TESTING SECTION TESTING SECTION TESTING SECTION TESTING SECTION TESTING SECTION TESTING SECTION 
+
+
+
+app.get('excelTodasComandas', (req,res)=>{
+db.query(`SELECT * new_schema.comanda`)
+
+})
+
+
+
+app.get('/excelComandasFechadas', (req,res)=>{
+    
+    db.query(`SELECT * FROM new_schema.comanda WHERE status=1;`, (err,result,fields)=>{
+       
+       
+        const obj ={
+            id: result.map(r=>r.idpedido),
+            nomeproduto: result.map(r=>r.nomeproduto),
+            quantidade: result.map(r=>r.quantidade),
+            preco:result.map(r=>r.preco),
+            status:result.map(r=>r.status),
+            pagamento:result.map(r=>r.pagamento),
+            hora: result.map(r=>r.create_time.toString())
+        }
+        const keys = Object.keys(obj)
+        const entries = Object.values(obj)
+
+        // console.log(entries.length)
+
+
+    
+
+
+        
+
+        var wb = new xl.Workbook();
+
+ 
+    // Add Worksheets to the workbook
+        var ws = wb.addWorksheet('28 de maio');
+
+
+        for (let i=1; i<=keys.length; i++){
+            
+            console.log(i)
+            console.log(keys[i-1])
+            ws.cell(1,i)
+            .string(keys[i-1])
+            
+            for (let j =2 ;j<=entries[0].length+1;j++){
+                
+                console.log(entries[0].length, j)
+                ws.cell(j, i)
+                .string(entries[i-1][j-1])
+            }
+        }
+
+        // ws.cell(2,1)
+        // .string('string2')
+      
+
+        wb.write('Excel-dia28demaio.xlsx');
+        const file = `/Users/freshMac/Documents/VSCODES/DEV/testes/server/Excel-dia28demaio.xlsx`;
+        // res.download(file); // Set disposition and send it.
+    })
+
+})
+
+
+
 
 
 //all users

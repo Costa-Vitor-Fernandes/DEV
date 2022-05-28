@@ -21,8 +21,8 @@ DELETE http://localhost:3001/deleteProduct
 Content-Type:application/json
 
 {
-    "nomeproduto": "pepsi",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTExODA1NTQsImV4cCI6MTY1MTIyMzc1NH0.MhJMuayag6_jQ29WhOPCTnPXU8grhHQuimR25Hui4WI"
+    "nomeproduto": "undefined",
+     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6WzFdLCJpYXQiOjE2NTM2ODE3OTIsImV4cCI6MTY1MzcyNDk5Mn0.Czq897kkmI000yrT-9DA8c4UpK9EC6oWHWRMU2wGiig"
 }
 
 ###
