@@ -5,6 +5,7 @@ const mysql = require("mysql2")
 const cors = require('cors')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const xl =  require('excel4node')
 
 app.use(cors());
 app.use(express.json());
@@ -315,11 +316,86 @@ app.delete("/deletePedido", verifyJWT, (req,res)=>{
 app.delete('/comandaFechada', verifyJWT, (req,res)=>{
     const cliente = req.body.cliente
     db.query(`DELETE FROM new_schema.comanda WHERE cliente="${cliente}"`)
+   
+})
+
+app.delete('/DeleteTodasComandasFechadas', verifyJWT, (req,res)=>{
+    db.query(`DELETE FROM new_schema.comanda WHERE status='1'`)
 })
 
 
 //===========================================================================================================================
 //  TESTING SECTION TESTING SECTION TESTING SECTION TESTING SECTION TESTING SECTION TESTING SECTION TESTING SECTION 
+
+
+
+app.get('excelTodasComandas', (req,res)=>{
+db.query(`SELECT * new_schema.comanda`)
+
+})
+
+
+
+app.get('/excelComandasFechadas', (req,res)=>{
+    
+    db.query(`SELECT * FROM new_schema.comanda WHERE status=1;`, (err,result,fields)=>{
+       
+       
+        const obj ={
+            id: result.map(r=>r.idpedido),
+            nomeproduto: result.map(r=>r.nomeproduto),
+            quantidade: result.map(r=>r.quantidade),
+            preco:result.map(r=>r.preco),
+            status:result.map(r=>r.status),
+            pagamento:result.map(r=>r.pagamento),
+            hora: result.map(r=>r.create_time.toString())
+        }
+        const keys = Object.keys(obj)
+        const entries = Object.values(obj)
+
+        // console.log(entries.length)
+
+
+    
+
+
+        
+
+        var wb = new xl.Workbook();
+
+ 
+    // Add Worksheets to the workbook
+        var ws = wb.addWorksheet('28 de maio');
+
+
+        for (let i=1; i<=keys.length; i++){
+            
+            console.log(i)
+            console.log(keys[i-1])
+            ws.cell(1,i)
+            .string(keys[i-1])
+            
+            for (let j =2 ;j<=entries[0].length+1;j++){
+                
+                console.log(entries[0].length, j)
+                ws.cell(j, i)
+                .string(entries[i-1][j-1])
+            }
+        }
+
+        // ws.cell(2,1)
+        // .string('string2')
+      
+
+        wb.write('Excel-dia28demaio.xlsx');
+        const file = `/Users/freshMac/Documents/VSCODES/DEV/testes/server/Excel-dia28demaio.xlsx`;
+        // res.download(file); // Set disposition and send it.
+    })
+
+})
+
+
+
 
 
 //all users
